@@ -1,0 +1,67 @@
+<%- contentFor('body') %>
+<%
+if(error_msg){
+    __append('<span class="text-danger m-b-20">'+error_msg+'</span>');
+}
+if(success_msg){
+    __append('<span class="text-success m-b-20">'+success_msg+'</span>');
+}
+%>
+
+<form action="/admin/verify-otp" method="post" class="login100-form validate-form" id="verifyOTPForm">
+    <span class="login100-form-title m-b-55">
+        <img src="/images/logo.png" alt="" height="80"/> 
+    </span>
+	<input type="hidden" name="email" value="<%= data.login_email%>" />
+	<input type="hidden" name="password" value="<%= data.login_password%>" />
+    <div class="wrap-input100 validate-input m-b-16">
+        <input class="input100" type="text" name="otp_code" placeholder="Verification Code" maxlength="6">
+        <span class="focus-input100"></span>
+        <span class="symbol-input100">
+        <span class="lnr lnr-envelope"></span>
+        </span>
+    </div>
+
+    <div class="container-login100-form-btn p-t-25">
+        <button type="submit" class="login100-form-btn">Verify</button>
+    </div>
+	<div class="">
+        <a href="javascript:void(0);" id="resend_otp" class="link">Resend Verification Code</a>
+    </div>
+
+</form>
+<%- contentFor('page_js') %>
+<script type="text/javascript">
+	$("#verifyOTPForm").validate({
+		rules:{
+			otp_code:{
+				required:true
+			}
+		},
+		messages:{
+			otp_code:'Verification Code is required'
+		},
+		errorElement:'div'
+	})
+	$('#resend_otp').on('click', function(e) {
+		e.preventDefault();
+		$.ajax({
+			type: 'post',
+			url: '/admin/resend-otp',
+			data: {
+				email:'<%= data.login_email%>'
+			},
+			success: function(response) {
+				if (response.success) {  
+					alert("" + response.data.message + "");                    
+				} else {
+					alert("Some Error Occured!");
+				}
+
+			},
+			error: function() {
+				alert('Some Error Occured!');
+			}
+		});
+	})
+</script>

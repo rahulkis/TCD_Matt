@@ -1,0 +1,26 @@
+<%
+let pages = data.pages;
+let current  = data.current;
+let filterDatas = data.filterDatas;
+const searchParams = new URLSearchParams();
+if(filterDatas) {
+    const params = filterDatas;
+    delete params.page_no;
+    Object.keys(params).forEach(key => searchParams.append(key, params[key]));
+}
+%>
+<div class="row">
+        <div class="col-sm-4"><% if(data.totalRecords && data.totalRecords>0){
+            if(data.totalRecords>1){
+                __append('Total records '+data.totalRecords)
+            }else{
+                __append('Total record '+data.totalRecords)
+            }
+        }%></div>
+        <div class="col-sm-8" style="text-align:right;">
+            <%- include('./paginationUl',{pages,current,filterDatas,searchParams })%>
+        </div>
+</div>
+<script>
+    
+</script>

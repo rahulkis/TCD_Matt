@@ -1,0 +1,103 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Video Comments</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+            </div>
+            <div class="box">
+                <!-- /.box-header
+                <div class="box-header with-border">
+					<h3 class="box-title">Filter</h3>
+                    <form class="form-material" method="post">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label>Community Question Category Name</label>
+                                    <input type="text" name="name" placeholder="Community Question Category Name" class="form-control form-control-line" value="<%=data.filterDatas.name%>">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <% let checked = (data.filterDatas.is_active==1) ? "checked" : "" %>
+                                    <input type="checkbox" id="status" name="is_active" value="1" <%=checked%>>
+                                    <label for="status">Active</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary" name="filter" value="1">Filter</button>
+                                    <button type="submit" class="btn btn-default" name="filter" value="2">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div> -->
+                <div class="box-body">
+                    <%- include ('./partials/admin_messages') %>
+                    <table id="example2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class="headings">
+                                <th>Comments</th>
+                                <th>Commented By</th>
+                                <th>Commented On</th>
+                                <th>No of times reported</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                        if(data.details && data.details.comments.length > 0){
+                            data.details.comments.forEach((individualComment)=>{
+                        %>
+                            <tr id="id_<%= individualComment.comment_id %>"> 
+                                <td><%=individualComment.comment%></td>
+                                <td> <% if(individualComment.commented_by_image.length > 0){%>
+                                    <span class="avatar-contact avatar-online"><img src="<%=individualComment.commented_by_image%>" alt="<%=individualComment.commented_by_user%>" height="50px" weight="50px"></span>
+                                <%}else{%>
+                                    <span class="avatar-contact avatar-online"><img src="/images/avatar.png" alt="avatar" height="50px" weight="50px"></span>
+                                <%} %>
+                                <br>
+                                <%=individualComment.commented_by_user%>
+                                </td>
+                                <td><%=individualComment.created_at%></td>
+                                <td><%=individualComment.reported_count%></td>
+                                <td>
+                                    <% if(individualComment.reported_count > 0){ %>
+                                        <a href="/admin/video/comments/remove-comment?video_id=<%=individualComment.video_id%>&id=<%=individualComment.comment_id%>" class="btn btn-danger btn-xs"><i class="fa fa-trash" title="Remove Comment"></i></a>||
+                                        <a href="/admin/video/comments/block-commenter/<%=individualComment.commented_by_user_id%>" class="btn btn-warning btn-xs"><i class="fa fa-ban" title="Bloch Commenter"></i></a>
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% })
+                        } %>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</section>
+<%- contentFor('page_js') %>
+<script>
+    $(document).ready(function () {
+        $("#categoryForm").validate({
+            rules:{
+                name:{
+                    required:true
+                }
+            },
+            errorElement:'div'
+        })
+    });
+</script>

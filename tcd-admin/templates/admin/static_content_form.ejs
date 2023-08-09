@@ -1,0 +1,123 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">New Content</h3>
+                    <div class="pull-right">
+                        <a href="/admin/static-content" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form class="form-material" method="post" action="/admin/static-content/manage" id="cmsForm" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="<%=data.details._id%>">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label> Title<span class="required">*</span></label>
+                                    <input type="text" name="page_title" placeholder="Page Title" class="form-control form-control-line" value="<%=data.details.page_title%>" <%= data.details.page_title ? 'readonly' : '' %>>
+                                </div>
+                            </div>                            
+                        </div>  
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="cms_image">Image:<span class="required">*</span></label>
+                                    <input type="file" class="file" name="cms_image" id="cms_image">
+                                    <p id="cms_image" style="display: none;"><b style="color:red;">Please select file less than 1mb</b></p>
+                                </div>
+                            </div>
+							<% if (data.details.banner_image.length > 0) { %>
+							<div class="col-md-12">
+                                <img src="<%=`https://tcd-project.s3.us-west-2.amazonaws.com/tcd-admin/cms/${data.details.banner_image}`%>" alt="<%= data.details.page_title%>" style="height: 50px; width: 50px;">
+                                <br><span><p style="font-weight: bold;">LAST UPLOADED IMAGE</p></span>
+                            </div>
+							<% } %>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+								<label> Content<span class="required">*</span></label>
+                                <textarea id="page_content" rows="7" cols="80" name="page_content" placeholder="Write your content here...." class="form-control form-control-line" required><%=data.details.page_content%></textarea>
+                            </div>
+                        </div>
+						<div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <input type="checkbox" id="status" name="is_active" value="<%=data.details.is_active%>" <%= data.details.is_active == 1 ? 'checked':''%>>
+                                    <label for="status">Active</label>
+                                </div>
+                            </div>
+						</div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="example-email">Parent Content<span class="required">*</span></label>
+                                <select class="form-control" name="parent_content">
+                                    <option value="" >No Parent</option>
+                                    <%
+                                        parentList = data.cmsList;
+                                        parentList.forEach(parent_list => {
+                                    %>
+                                        <option value="<%= parent_list._id %>" <%= (data.details.parent_content === parent_list._id) ? 'selected' : ''; %>><%= parent_list.page_title %></option>
+                                    <%
+                                        });
+                                    %>
+                                </select>
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label> Sort Order </label>
+                                    <input type="text" name="sort_order" placeholder="Page Title" class="form-control form-control-line" value="<%=data.details.sort_order%>" <%= data.details.sort_order %>>
+                                </div>
+                            </div>                            
+                        </div>  
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- contentFor('page_js') %>
+<script src="/script/additional-methods.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/19.1.1/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#page_content' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+<script>
+    $(document).ready(function () {
+        $("#cmsForm").validate({
+            ignore: [],
+            debug: false,
+            rules:{
+                page_title:{
+                    required:true
+                },
+				page_content:{
+                    required:true
+                }
+            },
+            messages:{
+                page_content:{
+                    required:'Description should not be blank, Please add few lines for description'
+                }
+            },
+            errorElement:'div'
+        })
+    });
+</script>

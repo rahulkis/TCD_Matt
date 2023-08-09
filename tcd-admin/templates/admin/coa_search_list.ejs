@@ -1,0 +1,44 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class="headings">
+                                <th>Search Terms</th>
+                                <th>Search By</th>
+                                <th>Status</th>
+                                <th>Date Search</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                        if(data.searchResult && data.searchResult.length > 0){
+                            data.searchResult.forEach((searchLog)=>{
+                        %>
+                            <tr>
+                                <td><%=searchLog.search_terms%></td>
+                                <td><%=searchLog.search_by.full_name%></td>
+                                <td><%=searchLog.status%></td>
+                                <td><%=new Date(searchLog.created_at).toLocaleDateString("en-US")%></td>
+                            </tr>
+                            <% })
+                        } %>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</section>
+<script>
+    $('#dateSet').datepicker({
+        format: 'mm-dd-yyyy',
+        autoclose: true
+        });
+</script>

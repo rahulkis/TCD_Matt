@@ -1,0 +1,637 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <%- include ('./partials/admin_messages') %>
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">New COA</h3>
+                    <div class="pull-right">
+                        <a href="/admin/coa" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                        <%
+            if (data.coa_status==='Success') {
+                if (data.coa_record.length > 0) {
+                var result = Object.keys(data.coa_record).map((key) => [data.coa_record[key]]);
+                data.details.cannabinoid_profile = [];
+                data.details.cannabinoid_profile.push({ name: result[68][0].Text, weight: result[69][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[76][0].Text, weight: result[77][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[81][0].Text, weight: result[82][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[85][0].Text, weight: result[86][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[90][0].Text, weight: result[91][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[95][0].Text, weight: result[96][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[100][0].Text, weight: result[101][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[105][0].Text, weight: result[106][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[110][0].Text, weight: result[111][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[115][0].Text, weight: result[116][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[120][0].Text, weight: result[121][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[125][0].Text, weight: result[126][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[130][0].Text, weight: result[131][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[135][0].Text, weight: result[136][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[140][0].Text, weight: result[141][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[145][0].Text, weight: result[146][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[150][0].Text, weight: result[151][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[155][0].Text, weight: result[156][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[160][0].Text, weight: result[161][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[165][0].Text, weight: result[166][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[170][0].Text, weight: result[171][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[175][0].Text, weight: result[176][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[180][0].Text, weight: result[181][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[185][0].Text, weight: result[186][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[190][0].Text, weight: result[191][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[195][0].Text, weight: result[196][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[200][0].Text, weight: result[201][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[205][0].Text, weight: result[206][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[210][0].Text, weight: result[211][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[215][0].Text, weight: result[216][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[220][0].Text, weight: result[221][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[225][0].Text, weight: result[226][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[230][0].Text, weight: result[231][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[235][0].Text, weight: result[236][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[240][0].Text, weight: result[241][0].Text});
+                data.details.cannabinoid_profile.push({ name: result[245][0].Text, weight: result[246][0].Text});
+                data.coa_record.forEach((icoa)=>{
+                    if (icoa.Number===16) {
+                        data.details.sample_id = icoa.Text.split(':')[1];
+                    }
+                    if (icoa.Number===24) {
+                        data.details.weight = icoa.Text.split(':')[1];
+                    }
+                    if (icoa.Number===10) {
+                        data.details.batch_id = icoa.Text.split(':')[1];
+                    }
+                    if (icoa.Number===31) {
+                        data.details.distributor_name = icoa.Text;
+                    }
+                    if (icoa.Number===30) {
+                        data.details.producer_name = icoa.Text;
+                    }
+                    if (icoa.Number===46) {
+                        data.details.distributor_lic = icoa.Text;
+                    }
+                    if (icoa.Number===45) {
+                        data.details.producer_lic = icoa.Text;
+                    }
+                    if (icoa.Number===23) {
+                        data.details.total_cannabinoid = icoa.Text;
+                    }
+                    if (icoa.Number===19) {
+                        data.details.total_CBD = icoa.Text;
+                    }
+                    if (icoa.Number===15) {
+                        data.details.total_THC = icoa.Text;
+                    }
+                    if (icoa.Number===7) {
+                        data.details.tested_date = icoa.Text.split(':')[1];
+                    }
+                })
+                }
+            }
+            data.details.laboratory_name = 'BELCOSTA LABS'
+            %><br />
+            <a href="<%=data.fileurl%>" data-toggle="modala" data-target="#myModalPDFURLt" target="_blank">View PDF/URL</a><br />
+            <div class="modal fade" id="myModalPDFURL" tabindex="-1" role="dialog" aria-labelledby="myModalPDFURL">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">PDF/URL</h4>
+                    </div>
+                    <div class="modal-body">
+<!-- <iframe src="<%=data.fileurl%>" ></iframe>-->                       
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                </div>
+                </div>
+            </div>
+            <a href="#myModalParsed" data-toggle="modal" data-target="#myModalParsed">View Parsed COA</a>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="myModalParsed" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                              <h4 class="modal-title" id="myModalLabel">Full Extracted Data</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table table-bordered table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Number</th>
+                                                            <th>Parsed Text</th>
+                                                            <th>Confidence</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <%
+                                                    if (data.coa_record) {
+                                                        for (var r = 0; r < data.coa_record.length; r++) {
+                                                            if (!!data.coa_record[r].Text) {
+                                                    %>
+                                                        <tr>
+                                                            <td><%=r%></td>
+                                                            <td><%=data.coa_record[r].Text%></td>
+                                                            <td><%=data.coa_record[r].Confidence%></td>
+                                                        </tr>
+                                                    <%
+                                                            }
+                                                        }
+                                                    }
+                                                    %>
+                                            </tbody>
+                                            </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form class="form-material" method="post" action="/admin/coa/manage" id="coaForm" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="<%=data.details._id%>">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category">Product:<span class="required">*</span></label> 
+                                    <%
+                                    let choosedProduct = data.details.product_id;
+                                    %>
+                                    <select name="product" id="product" class="form-control form-control-line">
+                                        <option value="">Select Product</option>
+                                        <%if(data.products){
+                                            data.products.forEach((product) => {
+                                                let productSelected="";
+                                                if(product._id.equals(choosedProduct)){
+                                                    productSelected="selected";
+                                                }
+                                            %>
+                                            <option value="<%=product._id%>" <%=productSelected%> ><%=product.name%></option>
+                                            <%
+                                            })
+                                        }%>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category">Data Source (URL/PDF):<span class="required">*</span></label> 
+                                    <input type="text" name="coa_source" placeholder="COA SOURCE" class="form-control form-control-line" value="<%=data.details.coa_source%>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="category">Data Source 2(URL/PDF):<span class="required">*</span></label> 
+                                    <input type="text" name="coa_source2" placeholder="COA SOURCE" class="form-control form-control-line" value="<%=data.details.coa_source2%>">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Associated COA Information</h4>
+                            </div>
+                            <div class="col-md-12">&nbsp;</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>COA Number<span class="required">*</span></label>
+                                    <input type="text" name="coa_no" placeholder="COA Number" class="form-control form-control-line" value="<%=data.details.coa_no%>">
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category">Strain:<span class="required">*</span></label> 
+                                    <%
+                                    let choosedStrain = data.details.strain;
+                                    %>
+                                    <select name="strain" id="strain" class="form-control form-control-line">
+                                        <option value="">Select Strain</option>
+                                        <%if(data.strainList){
+                                            data.strainList.forEach((individualStrain) => {
+                                                let strainSelected="";
+                                                if(individualStrain._id.equals(choosedStrain)){
+                                                    strainSelected="selected";
+                                                }
+                                            %>
+                                            <option value="<%=individualStrain._id%>" <%=strainSelected%> ><%=individualStrain.name%></option>
+                                            <%
+                                            })
+                                        }%>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Weight<span class="required">*</span></label>
+                                    <input type="text" name="weight" placeholder="weight" class="form-control form-control-line" value="<%=data.details.weight%>">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Sample Id<span class="required">*</span></label>
+                                    <input type="text" name="sample_id" placeholder="Sample Id" class="form-control form-control-line" value="<%=data.details.sample_id%>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Batch Id<span class="required">*</span></label>
+                                    <input type="text" name="batch_id" placeholder="Batch Id" class="form-control form-control-line" value="<%=data.details.batch_id%>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Producer Name<span class="required">*</span></label>
+                                    <input type="text" name="producer_name" placeholder="Producer Name" class="form-control form-control-line" value="<%=data.details.producer_name%>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Producer License<span class="required">*</span></label>
+                                    <input type="text" name="producer_lic" placeholder="Producer License" class="form-control form-control-line" value="<%=data.details.producer_lic%>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Distributor Name<span class="required">*</span></label>
+                                    <input type="text" name="distributor_name" placeholder="Distributor Name" class="form-control form-control-line" value="<%=data.details.distributor_name%>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Distributor License<span class="required">*</span></label>
+                                    <input type="text" name="distributor_lic" placeholder="Distributor License" class="form-control form-control-line" value="<%=data.details.distributor_lic%>">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Total Cannabinoid</label>
+                                    <input type="number" name="total_cannabinoid" placeholder="Total Cannabinoid" class="form-control form-control-line percent_field" value="<%=data.details.total_cannabinoid%>" min=0 step="0.01">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                               <div class="form-group">
+                                    <label>Total Terpenes</label>
+                                    <input type="number" name="total_terpenes" placeholder="Total Terpenes" class="form-control form-control-line percent_field" value="<%=data.details.total_terpenes%>" min=0 step="0.01">
+                               </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Total THC</label>
+                                    <input type="number" name="total_THC" placeholder="Total THC" class="form-control form-control-line percent_field" value="<%=data.details.total_THC%>" min=0 step="0.01">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                               <div class="form-group">
+                                    <label>Total CBD</label>
+                                    <input type="number" name="total_CBD" placeholder="Total CBD" class="form-control form-control-line percent_field" value="<%=data.details.total_CBD%>" min=0 step="0.01">
+                               </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Laboratory Name<span class="required">*</span></label>
+                                    <input type="text" name="laboratory_name" placeholder="Laboratory Name" class="form-control form-control-line" value="<%=data.details.laboratory_name%>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Tested On</label>
+                                    <% 
+                                    if(data.details.tested_at){
+                                        var month = data.details.tested_at.getUTCMonth() + 1;
+                                        if(month<10) {
+                                            month = "0"+month;
+                                        }
+                                        var day = data.details.tested_at.getUTCDate();
+                                        if(day < 10) {
+                                            day= "0"+day;
+                                        }
+                                        var year =data.details.tested_at.getUTCFullYear();
+                                        var testDate = month+ "-" + day + "-" +year;
+                                    }
+                                    %>
+                                    <input type="text" placeholder="mm-dd-yyyy" id="dateSet" name="tested_at" class="form-control form-control-line" value="<%=testDate%>">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Positive Test Report Text</label>
+                                    <input type="text" name="positive_test_report_text" placeholder="positive test report text" class="form-control form-control-line" value="<%=data.details.positive_test_report_text%>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                               <div class="form-group">
+                                <label>Negative Test Report Text</label>
+                                <input type="text" name="negative_test_report_text" placeholder="negative test report text" class="form-control form-control-line" value="<%=data.details.negative_test_report_text%>">
+                               </div>
+                            </div>
+                        </div>
+                        <% if(data.details.cannabinoid_profile.length>0){
+                                for(let k=0;k<(data.details.cannabinoid_profile).length;k++){ 
+                                    //console.log(data.details.cannabinoid_profile[k].name);
+                                    %>
+                                    <div class="row input-form">
+                                        <div class="col-md-6">
+                                            <label>Cannabinoid<span class="required">*</span></label>
+                                            <select name="cannabinoid_profile"  class="form-control form-control-line" id="validate_check">
+                                                    <option value="">--Select Cannabinoid--</option>
+                                                    <% for (let i = 0;i < data.cannabinoidList.length;i++){
+                                                        var cannabinoidSelected="";
+                                                        var canProfileName = JSON.stringify(data.details.cannabinoid_profile[k].name)
+                                                        var canListName = JSON.stringify(data.cannabinoidList[i].name)
+                                                        if(canProfileName===canListName){
+                                                            cannabinoidSelected="selected"
+                                                            console.log('match');
+                                                        }
+                                                    %>
+                                                    <option value="<%= data.cannabinoidList[i]._id%>" <%=cannabinoidSelected%>><%=data.cannabinoidList[i].name%></option>
+                                                    <% } %>
+                                            </select>
+                                            <p class="warning_msg"><b style="color: red;display: none;">Please select atleast one.</b></p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label>Cannabinoid Weight<span class="required">*</span></label>
+                                                <input type="text" name="cannabinoid_weight" placeholder="0" class="form-control form-control-line" value="<%=data.details.cannabinoid_profile[k].weight%>" min=0 step="0.01">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label style="width:100%">&nbsp;</label>
+                                            <button type="button" class="btn btn-warning btn-xs add_btn" data-placement="top" title="Add More Cannabinoid" style="display: none;"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <button type="button" class="btn btn-warning btn-xs but_remove" data-toggle="tooltip" data-placement="top" title="Remove Cannabinoid"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                        <%}
+                        }else { %>
+                            <div class="row input-form">
+                                <div class="col-md-6">
+                                    <label>Cannabinoid<span class="required">*</span></label>
+                                    <select name="cannabinoid_profile"  class="form-control form-control-line" id="validate_check">
+                                            <option value="">--Select Cannabinoid--</option>
+                                            <% for (let i = 0;i < data.cannabinoidList.length;i++){
+                                            %>
+                                            <option value="<%= data.cannabinoidList[i]._id%>"><%=data.cannabinoidList[i].name%></option>
+                                            <% } %>
+                                    </select>
+                                    <p class="warning_msg"><b style="color: red;display: none;">Please select atleast one.</b></p>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>Cannabinoid Weight<span class="required">*</span></label>
+                                        <input type="number" name="cannabinoid_weight" placeholder="0" class="form-control form-control-line percent_field" value="<%=data.cannabinoid_weight%>" min=0 step="0.01">
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="button" class="btn btn-warning btn-xs add_btn" data-toggle="tooltip" data-placement="top" title="Add More Cannabinoid" style="display: none;"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-warning btn-xs but_remove" data-toggle="tooltip" data-placement="top" title="Remove Cannabinoid"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        <% }
+                         %> 
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+                        <script>
+                            $(document).ready(function(){
+                                var elemSize = $('.input-form').children().length;
+                                if(elemSize===3){
+                                    $('.but_remove').hide();
+                                }
+                                $('.input-form:first .add_btn').show();
+                                $('#validate_check').change(function(){
+                                    $('.warning_msg b').hide();
+                                });
+                                $('.add_btn').click(function(){
+                                    var newel = $(this).parent().parent().clone(true);
+                                    $(newel).find('.col-md-1 .add_btn').hide();
+                                    $(newel).insertAfter($(this).parent().parent());
+                                    $('.but_remove').show();
+                                    $('.warning_msg b').hide();
+                                });
+                                $('.but_remove').click(function(){
+                                    var divSize = $('.input-form').children().length;
+                                    if(divSize<6){
+                                        $('.warning_msg b').show();
+                                        $('.but_remove').hide();
+                                    }
+                                    else{
+                                        $(this).parent().parent().remove();
+                                        $('.input-form:first .add_btn').show();
+                                    }
+                                });
+                                });
+                        </script>
+                            <% if(data.details.terpenes.length>0){
+                                for(let k=0;k<(data.details.terpenes).length;k++){ %>
+                                    <div class="row input-form-terpenes">
+                                    <div class="col-md-6">
+                                        <label>Terpenes<span class="required">*</span></label>
+                                        <select name="terpenes"  class="form-control form-control-line" id="validate_check_terpenes">
+                                                <option value="">--Select Terpenes--</option>
+                                                <% for (let i = 0;i < data.terpenesList.length;i++){
+                                                    var terpenesSelected="";
+                                                    if((data.details.terpenes[k].composition_id).equals((data.terpenesList[i]._id))){
+                                                        terpenesSelected="selected"
+                                                    }
+                                                %>
+                                                <option value="<%= data.terpenesList[i]._id%>" <%=terpenesSelected%>><%=data.terpenesList[i].name%></option>
+                                                <% } %>
+                                        </select>
+                                        <p class="warning_msg_terpenes"><b style="color: red;display: none;">Please select atleast one.</b></p>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Terpenes Weight<span class="required">*</span></label>
+                                            <input type="number" name="terpenes_weight" placeholder="0" class="form-control form-control-line percent_field" value="<%=data.details.terpenes[k].weight%>" min=0 step="0.01">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label style="width:100%">&nbsp;</label>
+                                        <button type="button" class="btn btn-warning btn-xs add_btn_terpenes" data-toggle="tooltip" data-placement="top" title="Add More Terpenes" style="display: none;"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-warning btn-xs but_remove_terpenes" data-toggle="tooltip" data-placement="top" title="Remove Terpenes"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                                <%}
+                            }else { %>
+                                <div class="row input-form-terpenes">
+                                <div class="col-md-6">
+                                    <label>Terpenes<span class="required">*</span></label>
+                                    <select name="terpenes"  class="form-control form-control-line" id="validate_check_terpenes">
+                                            <option value="">--Select Terpenes--</option>
+                                            <% for (let i = 0;i < data.terpenesList.length;i++){
+                                            %>
+                                            <option value="<%= data.terpenesList[i]._id%>"><%=data.terpenesList[i].name%></option>
+                                            <% } %>
+                                    </select>
+                                    <p class="warning_msg_terpenes"><b style="color: red;display: none;">Please select atleast one.</b></p>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>Terpenes Weight<span class="required">*</span></label>
+                                        <input type="number" name="terpenes_weight" placeholder="0" class="form-control form-control-line percent_field" value="<%=data.terpenes_weight%>" min=0 step="0.01">
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="button" class="btn btn-warning btn-xs add_btn_terpenes" data-toggle="tooltip" data-placement="top" title="Add More Terpenes" style="display: none;"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-warning btn-xs but_remove_terpenes"  data-toggle="tooltip" data-placement="top" title="Remove Terpenes"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                           <% }
+                           %> 
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+                        <script>
+                            $(document).ready(function(){
+                                var elemSize = $('.input-form-terpenes').children().length;
+                                if(elemSize===3){
+                                    $('.but_remove_terpenes').hide();
+                                }
+                                $('.input-form-terpenes:first .add_btn_terpenes').show();
+                                $('#validate_check_terpenes').change(function(){
+                                    $('.warning_msg_terpenes b').hide();
+                                });
+                                $('.add_btn_terpenes').click(function(){
+                                    var newel = $(this).parent().parent().clone(true);
+                                    $(newel).find('.col-md-1 .add_btn_terpenes').hide();
+                                    $(newel).insertAfter($(this).parent().parent());
+                                    $('.but_remove_terpenes').show();
+                                    $('.warning_msg_terpenes b').hide();
+                                });
+                                $('.but_remove_terpenes').click(function(){
+                                    var divSize = $('.input-form-terpenes').children().length;
+                                    if(divSize<6){
+                                        $('.warning_msg_terpenes b').show();
+                                        $('.but_remove_terpenes').hide();
+                                    }
+                                    else{
+                                       $(this).parent().parent().remove();
+                                       $('.input-form-terpenes:first .add_btn_terpenes').show();
+                                    }
+                                });
+                                });
+                        </script>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label style="width:100%">&nbsp;</label>
+                                    <% let checked = data.details.is_active ? "checked" : "" %>
+                                    <input type="checkbox" id="status" name="is_active" value="<%=data.details.is_active%>" <%=checked%>>
+                                    <label for="status"> Active</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label style="width:100%">&nbsp;</label>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- contentFor('page_js') %>
+<script src="/script/additional-methods.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#dateSet').datepicker({
+			format: 'mm-dd-yyyy',
+			autoclose: true,
+			endDate: new Date()
+        });
+        $("#coaForm").validate({
+            rules:{
+                coa_no:{
+                    required:true
+                },
+                name:{
+                    required:true
+                },
+                description:{
+                    required:true
+                },
+                strain:{
+                    required:true
+                },
+                weight:{
+                    required:true
+                },
+                cannabinoid_profile:{
+                    required:true
+                },
+                cannabinoid_weight:{
+                    required:true
+                },
+                terpenes:{
+                    required: true
+                },
+                terpenes_weight:{
+                    required:true
+                },
+                coa_image:{
+                    extension: "jpg,jpeg,png"
+                }
+            },
+            messages:{
+				coa_image: {
+					extension: "Only image type extensions (jpg,jpeg,png) are allowed"
+				}
+			},
+            errorElement:'div'
+        })
+        $('#coa_image').change(function () {
+            if (this.files.length > 0) {
+                $.each(this.files, function (index, value) {
+               var sizeLimit= 1024*1024; //size limit 1 mb
+               if(value.size>sizeLimit){
+                  $('#warning_image').show();
+               } 
+               else{
+                    $('#warning_image').hide();
+               } 
+                })
+            }
+        });
+		$(".percent_field").on("keydown", function() {
+			pastValue          = this.value;
+			pastSelectionStart = this.selectionStart;
+			pastSelectionEnd   = this.selectionEnd;
+		}).on("input propertychange", function() {
+			var regex = /^(100(\.0{0,2})?|(\d|[1-9]\d)(\.\d{0,2})?)$/;
+						
+			if (this.value.length > 0 && !regex.test(this.value)) {
+			this.value          = pastValue;
+			this.selectionStart = pastSelectionStart;
+			this.selectionEnd   = pastSelectionEnd;
+			}
+		});
+    });
+</script>

@@ -1,0 +1,72 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <%- include ('./partials/admin_messages') %>
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">New Test Labs</h3>
+                    <div class="pull-right">
+                        <a href="/admin/coa-testlabs/add" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form class="form-material" method="post" action="/admin/coa-testlabs/add" id="coaForm">
+                        <input type="hidden" name="id" value="">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Laboratory Name<span class="required">*</span></label>
+                                    <input type="text" name="labname" placeholder="COA Laboratory Name" class="form-control form-control-line" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Address<span class="required">*</span></label>
+                                    <input type="text" name="address" placeholder="Address" class="form-control form-control-line" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>License Number<span class="required">*</span></label>
+                                    <input type="text" name="license_number" placeholder="License Number" class="form-control form-control-line" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Contact<span class="required">*</span></label>
+                                    <input type="text" name="contact" placeholder="Contact" class="form-control form-control-line" value="">
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label style="width:100%">&nbsp;</label>
+                                    <input type="checkbox" id="status" name="is_deleted" value="" >
+                                    <label for="status"> Active</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label style="width:100%">&nbsp;</label>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- contentFor('page_js') %>

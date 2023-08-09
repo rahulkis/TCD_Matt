@@ -1,0 +1,128 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Filter</h3>
+                    <div class="box-tools pull-right">
+                        <a href="/admin/conditions/create" class="btn btn-primary">Add New Condition</a>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form class="form-material" method="post">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" name="search_text" placeholder="Search by Name" class="form-control form-control-line" value="<%=data.filterDatas.search_text%>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <% let checked = (data.filterDatas.is_active==1) ? "checked" : "" %>
+                                    <input type="checkbox" id="status" name="is_active" value="1" <%=checked%>>
+                                    <label for="status">Active</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary" name="filter" value="1">Filter</button>
+                                    <button type="submit" class="btn btn-default" name="filter" value="2">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <%- include ('./partials/admin_messages') %>
+                    <table id="example2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class="headings">
+								<th>Name</th>
+                                <th>Image</th>
+                                <th>Icon</th>
+                                <th>Sort Order</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                        if(data.records && data.records.length > 0){
+                            data.records.forEach((record)=>{
+                        %>
+                            <tr id="id_<%= record._id %>">
+								<td><%=record.name%></td>
+                                <td> 
+                                    <% if(record.image.length > 0){%>
+                                    <span class="avatar-contact avatar-online"><img src="<%=record.image%>" alt="<%=record.name%>" height="50px" weight="50px"></span>
+                                    <% } %>
+                                </td>
+                                <td> 
+                                    <% if(record.icon.length > 0){%>
+                                    <span class="avatar-contact avatar-online"><img src="<%=record.icon%>" alt="<%=record.name%>" height="50px" weight="50px"></span>
+                                    <% } %>
+                                </td>
+                                <td><%=record.sort_order%></td>
+                                <td>
+                                    <% if(record.is_active){ %>
+                                    <span class="chip green lighten-5">
+                                    <span class="green-text">Active</span>
+                                    </span>
+                                    <% }else{ %>
+                                    <span class="chip red lighten-5">
+                                    <span class="red-text">Inactive</span>
+                                    </span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <a href="/admin/conditions/update/<%= record._id%>" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-edit"></i></a>
+                                    <!-- <button type="button" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button> -->
+                                    <a href="/admin/conditions/delete/<%= record._id%>" class="btn btn-danger btn-xs removerecord" style="color:#fff"><i class="fa fa-trash-o"></i></a>
+                                </td>
+                            </tr>
+                        <% })
+                        } %>
+                        
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Image</th>
+                                <th>Icon</th>
+                                <th>Sort Order</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <%- include('partials/pagination')%>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</section>
+<%- contentFor('page_js') %>
+<script>
+    $('tbody').sortable({
+        items:"tr:not('.headings')",
+        placeholder:'bg-warning',
+        update:function(){
+           const ids = $('tbody').sortable('serialize');
+           console.log(ids);
+           $.post('/admin/conditions/manage-ordering',ids,function(res){
+               console.log(res);
+           })
+        }
+    });
+</script>

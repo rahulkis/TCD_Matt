@@ -1,0 +1,365 @@
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <form action="/admin/userlist/manage" id="siteForm" method="post" enctype="multipart/form-data" class="form-material">
+                        <input type="hidden" name="id" value="<%=data.details._id%>">
+                        <div class="row">
+                            <div class="col-md-12">
+								<% if (data.profileImg != '') {%>
+								<img src="<%=data.profileImg%>" alt="<%=data.details.full_name%>" height="150px" weight="150px">
+								<% } %>
+                                <div class="form-group">
+                                    <label>Upload Picture</label>
+                                    <input type="file" name="profile_image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Name<span class="required">*</span></label>
+                                    <input type="text" placeholder="Name" name="full_name" value="<%=data.details.full_name%>" class="form-control form-control-line">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Email<span class="required">*</span></label>
+                                    <input type="text" placeholder="Email" name="email" value="<%=data.details.email%>" class="form-control form-control-line" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="text" placeholder="Phone" name="contact_no" value="<%=data.details.contact_no%>" class="form-control form-control-line us_phone">
+                                </div>
+                            </div>
+							<div class="col-md-6">
+                                <div class="form-group">
+                                    <label>DOB</label>
+									<% 
+                                    if(data.details.dob){
+                                        var month = data.details.dob.getMonth() + 1;
+                                        if(month<10) {
+                                            month = "0"+month;
+                                        }
+                                        var day = data.details.dob.getDate();
+                                        if(day < 10) {
+                                            day= "0"+day;
+                                        }
+                                        var year =data.details.dob.getFullYear();
+                                        var dob = month + "-" + day + "-" +year;
+                                    }
+                                    %>
+                                    <input type="text" id="dob" name="dob" value="<%= dob%>" class="form-control form-control-line">
+                                </div>
+                            </div>
+                        </div> 
+						<div class="row">
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Gender</label>
+                                    <select class="form-control" name="gender">
+										<option value="Male" <%=data.details.gender == 'Male' ? 'selected' : ''%>>Male</option>
+										<option value="Female" <%=data.details.gender == 'Female' ? 'selected' : ''%>>Female</option>
+										<option value="Others" <%=data.details.gender == 'Others' ? 'selected' : ''%>>Others</option>
+                                        <option value="Rather not say" <%=data.details.gender == 'Rather not say' ? 'selected' : '' %>>Rather not say</option>
+									</select>
+                                </div>
+                            </div>
+							<!-- <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Physique</label>
+                                    <select class="form-control" name="physique">
+									<option>Please Select (Optional)</option>
+									<% data.physiques.forEach((phy) => {%>
+										<option value="<%= phy._id%>" <%=data.details.physique == phy._id.toString() ? 'selected' : ''%>><%= phy.name%></option>
+									<% }) %>	
+									</select>
+                                </div>
+                            </div> -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Activity Level</label>
+                                    <select class="form-control" name="activity_level">
+									<option value="">Please Select (Optional)</option>
+									<% data.activity_level.forEach((activity) => {%>
+										<option value="<%= activity%>" <%=data.details.activity_level == activity ? 'selected' : ''%>><%= activity %></option>
+									<% }) %>	
+									</select>
+                                </div>
+                            </div>
+                        </div> 
+                        <!-- <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Activity Level</label>
+                                    <select class="form-control" name="activity_level">
+									<option>Please Select (Optional)</option>
+									<% data.activity_level.forEach((activity) => {%>
+										<option value="<%= activity%>" <%=data.details.activity_level == activity ? 'selected' : ''%>><%= activity %></option>
+									<% }) %>	
+									</select>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Height</label>
+                                    <input type="text" id="height" name="height" value="<%=data.details.height%>" class="form-control form-control-line"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <select class="form-control" name="height_scale">
+									<option value="">Please Select (Optional)</option>
+									<% data.height_scales.forEach((scale) => {%>
+										<option value="<%= scale.name%>" <%=data.details.height_scale == scale.name ? 'selected' : ''%>><%= scale.name %></option>
+									<% }) %>	
+									</select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Weight</label>
+                                    <input type="text" id="weight" name="weight" value="<%=data.details.weight%>" class="form-control form-control-line"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <select class="form-control" name="weight_scale">
+									<option value="">Please Select (Optional)</option>
+									<% data.weight_scales.forEach((scale) => {%>
+										<option value="<%= scale.name%>" <%=data.details.weight_scale == scale.name ? 'selected' : ''%>><%= scale.name %></option>
+									<% }) %>	
+									</select>
+                                </div>
+                            </div>
+                        </div>
+						<div class="row">
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Cannabis Consumption</label>
+                                    <select class="form-control" name="cannabis_consumption">
+									<% data.cannabisConsumption.forEach((cC) => {%>
+										<option value="<%= cC._id%>" <%=data.details.cannabis_consumption == cC._id.toString() ? 'selected' : ''%>><%= cC.name%></option>
+									<% }) %>	
+									</select>
+                                </div>
+                            </div>
+							<div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Symptoms</label>
+                                    <select class="form-control form-control-line select2" multiple="true" name="symptoms[]">
+									<% data.symptoms.forEach((sym) => {
+										let symptomSelected=""										
+										if(data.selectedSymptomArr.includes(sym._id.toString())){
+											symptomSelected = "selected"
+										}										
+									%>
+										<option value="<%= sym._id%>" <%= symptomSelected%>><%= sym.name%></option>
+									<% }) %>	
+									</select>
+                                </div>
+                            </div>
+                        </div> 
+						<div class="row">
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Desired Effects</label>
+                                    <select class="form-control form-control-line select2" multiple="true" name="effects[]">
+									<% data.effects.forEach((effect) => {
+									    let effectSelected=""										
+										if(data.selectedEffectArr.includes(effect._id.toString())){
+											effectSelected = "selected"
+										}										
+									%>
+										<option value="<%= effect._id%>" <%= effectSelected%>><%= effect.name%></option>
+									<% }) %>	
+									</select>
+                                </div>
+                            </div>
+							<div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Activities</label>
+                                    <select class="form-control form-control-line select2" multiple="true" name="activities[]">
+									<% data.activities.forEach((activity) => {
+									    let activitySelected=""										
+										if(data.selectedActivitiesArr.includes(activity._id.toString())){
+											activitySelected = "selected"
+										}										
+									%>
+										<option value="<%= activity._id%>" <%= activitySelected%>><%= activity.name%></option>
+									<% }) %>	
+									</select>
+                                </div>
+                            </div>
+                        </div> 
+						<div class="row">
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Cannabinoids</label>
+                                    <select class="form-control form-control-line select2" multiple="true" name="cannabinoids[]">
+									<% data.cannabinoids.forEach((cannabinoid) => {
+									    let cannabinoidSelected=""										
+										if(data.selectedCannabinoidsArr.includes(cannabinoid._id.toString())){
+											cannabinoidSelected = "selected"
+										}										
+									%>
+										<option value="<%= cannabinoid._id%>" <%= cannabinoidSelected%>><%= cannabinoid.name%></option>
+									<% }) %>	
+									</select>
+                                </div>
+                            </div>
+							<div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Favorite Strains</label>
+                                    <select class="form-control" name="favourite_strains">
+									<% data.strains.forEach((strain) => {%>
+										<option value="<%= strain._id%>" <%=data.details.favourite_strains == strain._id.toString() ? 'selected' : ''%>><%= strain.name%></option>
+									<% }) %>	
+									</select>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Conditions</label>
+                                    <select class="form-control form-control-line select2" multiple="true" name="conditions[]">
+									<% data.conditions.forEach((condition) => {
+									    let conditionsSelected=""										
+										if(data.selectedConditionsArr.includes(condition._id.toString())){
+											conditionsSelected = "selected"
+										}										
+									%>
+										<option value="<%= condition._id%>" <%= conditionsSelected%>><%= condition.name%></option>
+									<% }) %>	
+									</select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <select class="form-control" name="country">
+									<option>Please Select </option>
+									<% data.country.forEach((rec) => {%>
+										<option value="<%= rec._id%>" <%=data.details.country == rec._id.toString() ? 'selected' : ''%>><%= rec.name%></option>
+									<% }) %>	
+									</select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>State</label>
+                                    <select class="form-control" name="state">
+									<option>Please Select</option>
+									<% data.states.forEach((state) => {%>
+										<option value="<%= state._id%>" <%=data.details.state == state._id.toString() ? 'selected' : ''%>><%= state.name%></option>
+									<% }) %>	
+									</select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Zipcode</label>
+                                    <input type="text" id="zipcode" name="zipcode" value="<%=data.details.zipcode%>" class="form-control form-control-line"/>
+                                </div>
+                            </div>
+                        </div>
+						<div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                       <input type="checkbox" name="is_active" value="1" <%= data.details.is_active == 1 ? 'checked' : ''%>>
+                                       <label for="status">Active</label>
+                                </div>
+                            </div>
+                        </div>                         
+                                
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Update User</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form> 
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+</section>
+    
+<%- contentFor('page_js') %>
+<script src="/script/additional-methods.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+		$('#dob').datepicker({
+			format: 'mm-dd-yyyy',
+			endDate: '-18y',//Min 18 years
+            autoclose: true
+		});
+		$('.us_phone').on('input', function (e) {
+			var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+			e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+		})
+        $("#siteForm").validate({
+            rules:{
+				profile_image: {
+					extension: "jpg,jpeg,png"
+				},
+                full_name:{
+                    required:true
+                },
+                email:{
+                    required:true,
+					email: true
+                },
+                height:{
+                    digits:true,
+                    min:1
+                },
+                weight:{
+                    digits:true,
+                    min:1
+                },
+                dob:{
+                    required:true
+                },
+                activity_level:{
+                    required:true
+                },
+                state:{
+                    required:true
+                },
+                country:{
+                    required:true
+                }
+            },
+			messages:{
+				profile_image: {
+					extension: "Only image type extensions (jpg,jpeg,png) are allowed"
+				}
+			},
+            errorElement:'div'
+        })
+    })
+</script>

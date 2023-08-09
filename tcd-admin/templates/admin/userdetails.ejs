@@ -1,0 +1,95 @@
+<section class="content">
+
+    <div class="row">
+      <div class="col-md-3">
+        <% var details = (data.hasOwnProperty('userProfile') ? data.userProfile : {})%>
+        <!-- Profile Image -->
+        <div class="box box-primary">
+          <div class="box-body box-profile">
+              <div class="text-center"> 
+                    <% if(details.profile_image.length > 0) { %>
+                    <img class="profile-user-img img-responsive img-circle" src="/uploads/profile_image/<%=details.profile_image%>" alt="<%=details.name%>">
+                    <%}else{%>
+                        <img class="profile-user-img img-responsive img-circle" src="/images/avatar5.png" alt="<%=details.name%>">
+                    <%}%>
+              </div>
+              <h3 class="profile-username text-center"><%=details.name%></h3>
+
+              <p class="text-muted text-center"></p>
+
+              <!--<ul class="list-group list-group-unbordered">
+                  <li class="list-group-item">
+                  <b>Followers</b> <a class="pull-right">1,322</a>
+                  </li>
+              </ul>-->
+              <!--<a href="{{url('admin/storage-providers/manage/'.$details->provider_id)}}" class="btn bg-maroon btn-block"><b>Manage store information</b></a>-->
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-md-9">
+          <div class="box box-primary">
+              <div class="box-body box-profile">
+                  <strong class="dlt"><i class="fa fa-home margin-r-5"></i>Email</strong>
+                  <p class="text-muted">
+                      <span class=""><%=details.email%></span>
+                  </p>
+                  <strong class="dlt"><i class="fa fa-mobile margin-r-5"></i>Contact No.</strong>
+                  <p class="text-muted">
+                      <span class=""><%=details.contact_no%></span>
+                  </p>
+                  <strong class="dlt"><i class="fa fa-map-marker margin-r-5"></i>Address</strong>
+                  <p class="text-muted">
+                      <span class=""><%=details.address%></span>
+                  </p>
+                  <strong class="dlt"><i class="fa fa-map-marker margin-r-5"></i>City</strong>
+                  <p class="text-muted">
+                      <span class=""><%=details.city%></span>
+                  </p>
+                  <strong class="dlt"><i class="fa fa-map-marker margin-r-5"></i>State</strong>
+                  <p class="text-muted">
+                      <span class="">
+                          <% if(details.hasOwnProperty('state')){ %>
+                          <%=details.state.name%>
+                          <% } %>
+                    </span>
+                  </p>
+                  <strong class="dlt"><i class="fa fa-industry margin-r-5"></i>Occupation</strong>
+                  <p class="text-muted">
+                      <span class=""><%=details.occupation%></span>
+                  </p>
+                  <strong class="dlt"><i class="fa fa-building margin-r-5"></i>Employer</strong>
+                  <p class="text-muted">
+                      <span class=""><%=details.employer%></span>
+                  </p>
+                  <strong class="dlt"><i class="fa fa-globe margin-r-5"></i>Social Security Number</strong>
+                  <p class="text-muted">
+                      <span class=""><%=details.social_security_number%></span>
+                  </p>
+                  <!-- <strong class="dlt"><i class="fa fa-square margin-r-5"></i></strong>
+                  <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Bank Name</th>
+                            <th>Account No.</th>
+                            <th>Account Name</th>
+                            <th>Routing Number</th>
+                        </tr>
+                    </thead>    
+                    <tbody>
+                      
+                    </tbody>    
+                  </table> -->
+                  
+                  
+              </div>
+          </div>
+        <!-- /.nav-tabs-custom -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+</section>

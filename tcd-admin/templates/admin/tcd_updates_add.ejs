@@ -1,0 +1,82 @@
+<section class="content">
+  <!-- Small boxes (Stat box) -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box" style="padding: 10px">
+        <form
+          method="post"
+          action="/admin/tcd-updates/manage"
+          id="tcdUpdatesForm"
+        >
+          <input
+            type="hidden"
+            name="id"
+            value="<%=data.tcd_update_data._id%>"
+          />
+          <div class="form-group">
+            <label>Title</label>
+            <input
+              name="title"
+              type="text"
+              class="form-control"
+              aria-describedby="title"
+              placeholder="Title"
+              value="<%=data.tcd_update_data.title%>"
+            />
+          </div>
+          <div class="form-group">
+              <label>Category</label>
+                <select class="form-control" name="category">
+                  <option value="">Please Select</option>
+                  <option value="Demo 1" <%=data.tcd_update_data.category=='Demo 1' ? 'selected' : '' %>>Demo 1</option>
+                  <option value="Demo 2" <%=data.tcd_update_data.category=='Demo 2' ? 'selected' : '' %>>Demo 2</option>
+                </select>
+          </div>
+          <!-- </div> -->
+          <div class="form-group">
+            <label>Description</label>
+            <textarea
+              rows="7"
+              cols="80"
+              name="description"
+              type="text"
+              placeholder="Description"
+              class="form-control form-control-line"
+              value="<%=data.tcd_update_data.description%>"
+            >
+<%=data.tcd_update_data.description%></textarea
+            >
+          </div>
+          <div class="form-check">
+            <input name="is_published" type="checkbox" class="form-check-input"
+            id="exampleCheck1" <%=data.tcd_update_data.is_published==1 ?
+            'checked' : '' %> />
+            <label class="form-check-label" for="exampleCheck1">Publish</label>
+          </div>
+          <div style="display: flex; justify-content: end">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- /.row -->
+</section>
+
+<%- contentFor('page_js') %>
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#tcdUpdatesForm").validate({
+      rules: {
+        title: {
+          required: true,
+        },
+        description: {
+          required: true,
+        },
+      },
+      errorElement: "span",
+      errorClass: "text-danger",
+    });
+  });
+</script>

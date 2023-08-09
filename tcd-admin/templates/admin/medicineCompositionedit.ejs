@@ -1,0 +1,117 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <%- include ('./partials/admin_messages') %>
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Update COA Composition</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form class="form-material" method="post" action="/admin/coa-composition/manage" id="medicineCompositionForm" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="<%=data.details._id%>">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>COA Composition Name<span class="required">*</span></label>
+                                    <input type="text" name="name" placeholder="name" class="form-control form-control-line" value="<%=data.details.name %>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="type">Type:<span class="required">*</span></label> &nbsp; &nbsp;
+                                    <select name="type" id="type" class="form-control" required>
+                                        <option value="">Select Type</option>
+                                        <% let selectedType = data.details.type %>
+                                        <option value="1" <%= (data.details.type ==1) ? 'selected' : '' %>>Cannabinoid</option>
+                                        <option value="2" <%= (data.details.type ==2) ? 'selected' : '' %>>Terpenes</option>
+                                        <option value="3" <%= (data.details.type ==3) ? 'selected' : '' %>>Pesticides</option>
+                                        <option value="4" <%= (data.details.type ==4) ? 'selected' : '' %>>Microbials</option>
+                                        <option value="5" <%= (data.details.type ==5) ? 'selected' : '' %>>Mycotoxins</option>
+                                        <option value="6" <%= (data.details.type ==6) ? 'selected' : '' %>>Heavy Metals</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+								<% if (data.image != '') {%>
+								<img src="/uploads/composition/<%=data.details.image%>" alt="<%=data.details.name%>" height="150px" weight="150px">
+								<% } %>
+                                <div class="form-group">
+                                    <label for="composition_image">Image:<span class="required">*</span></label>
+                                    <input type="file" name="composition_image" id="composition_image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Description<span class="required">*</span></label>
+                                <textarea id="content" rows="7" cols="80" name="description" placeholder="Write your content here...." class="form-control form-control-line"><%=data.details.description%></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                   <label>&nbsp;</label>
+                                   <% let checked = data.details.is_active == 1 ? "checked" : "" %>
+                                   <input type="checkbox" id="status" name="is_active" value="1" <%=checked%>>
+                                   <label for="status">Active</label>
+                                </div>
+                           </div>
+                           <div class="col-md-3">
+                               <div class="form-group">
+                                   <label style="width:100%">&nbsp;</label>
+                                   <button type="submit" class="btn btn-primary"><%= (data.details._id) ? 'Update' : 'Add' %></button>
+                               </div>
+                           </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</section>
+<%- contentFor('page_js') %>
+<script src="/script/additional-methods.js"></script>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/19.1.1/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#content' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+<script>
+    $(document).ready(function () {
+        $("#medicineCompositionForm").validate({
+			ignore: [],
+			debug: false,
+            rules:{
+				composition_image: {
+					<% if (data.details.image.length == '') {%>
+					required:true,
+					<% } %>
+					extension: "jpg,jpeg,png"
+				},
+                name:{
+                    required:true
+                },
+                description:{
+                    required:true
+                },
+                type:{
+                    required:true
+                }
+            },
+            errorElement:'div'
+        })
+    });
+</script> 

@@ -1,0 +1,177 @@
+<% let loggedUser = (data.hasOwnProperty('loggedUser'))?JSON.parse(JSON.stringify(data.loggedUser)):undefined %>
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                
+                <% if(loggedUser.hasOwnProperty('profile_image') && loggedUser.profile_image.length > 0 ){%>
+                    <img src="https://tcd-project.s3.us-west-2.amazonaws.com/tcd-admin/profile_image/<%=loggedUser.profile_image%>" class="img-circle" alt="User Image">
+                <%}else{%>
+                    <img src="/images/avatar5.png" class="img-circle" alt="User Image">
+                <%}%>
+            </div>
+            <div class="pull-left info">
+            <p>Administrator</p>
+            </div>
+        </div>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+            <li>
+                <a href="/admin/dashboard">
+                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                </a>
+            </li>
+			<% if(loggedUser.hasOwnProperty('user_type') && loggedUser.user_type == 1 ){%>
+			<li>
+                <a href="/admin/subadminlist">
+                    <i class="fa fa-users"></i> <span>Sub Admin List</span>
+                </a>
+            </li>
+			<%}%>
+            <li>
+                <a href="/admin/userlist">
+                    <i class="fa fa-users"></i> <span>User List</span>
+                </a>
+            </li>
+			<li>
+                <a href="/admin/userdiarylist">
+                    <i class="fa fa-users"></i> <span>User Diary List</span>
+                </a>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-list"></i>
+                    <span>Partner</span>
+                    <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">                    
+                    <li><a href="/admin/partner-admin"><i class="fa fa-circle-o"></i>Partner Admin</a></li>
+                    <li><a href="/admin/partner"><i class="fa fa-circle-o"></i>Partner</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-list"></i>
+                    <span>Master Data</span>
+                    <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <!-- <li><a href="/admin/physique"><i class="fa fa-circle-o"></i>Physique</a></li> -->
+                    <li><a href="/admin/activity"><i class="fa fa-circle-o"></i>Activities</a></li>
+                    <li><a href="/admin/effect"><i class="fa fa-circle-o"></i>Effects</a></li>
+
+                    <li><a href="/admin/symptom"><i class="fa fa-circle-o"></i>Symptoms</a></li>
+                    <li><a href="/admin/conditions"><i class="fa fa-circle-o"></i>Conditions</a></li>
+                    <li><a href="/admin/cannabinoid"><i class="fa fa-circle-o"></i>Cannabinoid Consumption</a></li>
+                    <li><a href="/admin/consumption-frequency"><i class="fa fa-circle-o"></i>Consumption Frequency</a></li>
+                    <li><a href="/admin/consumption-reason"><i class="fa fa-circle-o"></i>Consumption Reason</a></li>
+                    <li><a href="/admin/strain"><i class="fa fa-circle-o"></i>Strains</a></li>
+                    <li><a href="/admin/mood"><i class="fa fa-circle-o"></i>Mood</a></li>
+                    <li><a href="/admin/consumption-methods"><i class="fa fa-circle-o"></i>Consumption Methods</a></li>
+                    <li><a href="/admin/consumption-negatives"><i class="fa fa-circle-o"></i>Consumption Negatives</a></li>
+                    <li><a href="/admin/faq-category"><i class="fa fa-circle-o"></i>Faq Category</a></li>
+                    <li><a href="/admin/community-questions-category" style="white-space: break-spaces"><i class="fa fa-circle-o"></i>Community Question Category</a></li>
+                    <li><a href="/admin/country"><i class="fa fa-circle-o"></i>Country</a></li>
+                    <li><a href="/admin/states"><i class="fa fa-circle-o"></i>State</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-list"></i>
+                    <span>Manage Products</span>
+                    <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="/admin/products"><i class="fa fa-circle-o"></i>Products</a></li>
+                    <li><a href="/admin/products/add"><i class="fa fa-circle-o"></i>Add Product</a></li>
+                    <li><a href="/admin/product-types"><i class="fa fa-circle-o"></i>Product Types</a></li>
+                    <li><a href="/admin/product-types/add"><i class="fa fa-circle-o"></i>Add Product Type</a></li>
+                </ul>
+            </li>
+            <!-- <li>
+                <a href="/admin/products">
+                    <i class="fa fa-list"></i> <span>Product List</span>
+                </a>
+            </li> -->
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-list"></i>
+                    <span>COA Data</span>
+                    <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="/admin/coa"><i class="fa fa-circle-o"></i>COA Full Listing</a></li>
+                    <li><a href="/admin/coa-composition"><i class="fa fa-circle-o"></i>COA Compositions</a></li>
+                    <li><a href="/admin/coa-pending"><i class="fa fa-circle-o"></i>COA Queue</a></li>
+                    <!--<li><a href="/admin/coa-upload"><i class="fa fa-circle-o"></i>Download COA Data</a></li>-->
+                    <li><a href="/admin/coa-upload"><i class="fa fa-circle-o"></i>Upload COA Data</a></li>
+                    <li><a href="/admin/coa-url-process"><i class="fa fa-circle-o"></i>Parse COA URL</a></li>
+                    <li><a href="/admin/coa-testlabs"><i class="fa fa-circle-o"></i>Test Labs</a></li>
+                    <li><a href="/admin/coa-search-list"><i class="fa fa-circle-o"></i>COA Searches</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/admin/video">
+                    <i class="fa fa-video-camera"></i> <span>Video List</span>
+                </a>
+            </li>
+            <li>
+                <a href="/admin/article">
+                    <i class="fa fa-list"></i> <span>Article List</span>
+                </a>
+            </li>
+            <li>
+                <a href="/admin/community-questions">
+                    <i class="fa fa-file"></i> <span>Community Questions List</span>
+                </a>
+            </li>
+			<li>
+                <a href="/admin/cms">
+                    <i class="fa fa-file"></i> <span>CMS List</span>
+                </a>
+            </li>
+            <li>
+                <a href="/admin/static-content">
+                    <i class="fa fa-file"></i> <span>Content List</span>
+                </a>
+            </li>
+			<li>
+                <a href="/admin/faq">
+                    <i class="fa fa-file"></i> <span>FAQ List</span>
+                </a>
+            </li>
+			<li>
+                <a href="/admin/feedback">
+                    <i class="fa fa-file"></i> <span>Feedback List</span>
+                </a>
+            </li>
+			<li>
+                <a href="/admin/banner-advertisement">
+                    <i class="fa fa-file"></i> <span>Banner Advertisement List</span>
+                </a>
+            </li>
+            <li>
+                <a href="/admin/settings/my-entourage">
+                    <i class="fa fa-file"></i> <span>My Entourage Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="/admin/tcd-updates">
+                    <i class="fa fa-edit"></i> <span>TCD Updates</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

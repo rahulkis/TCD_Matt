@@ -1,0 +1,79 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <%- include ('./partials/admin_messages') %>
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Product Types</h3>
+                    <div class="pull-right">
+                        <a href="/admin/product-types" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form class="form-material" method="post" action="/admin/product-types/manage" id="prdTypeForm">
+                        <input type="hidden" name="id" value="<%=data.details._id%>">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category">Parent Type:</label> 
+                                    <%
+                                    let choosedParentTypeId = data.details.parent_id;
+                                    %>
+                                    <select name="parent_id" id="parent_id" class="form-control form-control-line">
+                                        <option value="">Select Parent Type</option>
+                                        <%if(data.parent_types){
+                                            data.parent_types.forEach((type) => {
+                                                let typeSelected="";
+                                                if(type._id.equals(choosedParentTypeId)){
+                                                    typeSelected="selected";
+                                                }
+                                            %>
+                                            <option value="<%=type._id%>" <%=typeSelected%> ><%=type.name%></option>
+                                            <%
+                                            })
+                                        }%>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Name<span class="required">*</span></label>
+                                    <input type="text" name="name" placeholder="Product Type Name" class="form-control form-control-line" value="<%=data.details.name%>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                        <% let checked = data.details.is_active ? "checked" : "" %>
+                                        <input type="checkbox" id="status" name="is_active" value="1" <%=checked%>>
+                                        <label for="status">Active</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- contentFor('page_js') %>
+<script>
+    $(document).ready(function () {
+        $("#prdTypeForm").validate({
+            rules:{
+                name:{
+                    required:true
+                }
+            },
+            errorElement:'div'
+        })
+    });
+</script>

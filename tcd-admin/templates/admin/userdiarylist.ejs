@@ -1,0 +1,175 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Filter</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form class="form-material" method="post">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>User Name</label>
+                                    <input type="text" name="full_name" placeholder="User Name" class="form-control form-control-line" value="<%=data.filterDatas.full_name%>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>User Email</label>
+                                    <input type="text" name="email" placeholder="User Email" class="form-control form-control-line" value="<%=data.filterDatas.email%>">
+                                </div>
+                            </div>
+							<div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Public Entry</label>
+                                    <select class="form-control" name="is_public">
+									    <option value="">Please Select</option>
+										<option value="1" <%=data.filterDatas.is_public == 1 ? 'selected' : ''%>>Yes</option>
+										<option value="2" <%=data.filterDatas.is_public == 2 ? 'selected' : ''%>>No</option>
+									</select>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Date Range</label>
+                                    <input type="text" id="dateRangeInput" class="form-control form-control-line"
+                                        name="daterange" value="<%=data.filterDatas.daterange%>" />
+                                    <select id="selectOption" class="form-control form-control-line"
+                                        name="filterDateType">
+                                        <%if(data.dateRange && data.dateRange.length > 0)
+                                            { data.dateRange.forEach((currentValue)=>{ %>
+                                               <% if(data.filterDatas &&
+                                                    data.filterDatas.filterDateType===currentValue.value){%>
+                                                    <option value="<%=currentValue.value%>" selected>
+                                                        <%=currentValue.month%>
+                                                    </option>
+                                               <%} else {%>
+                                                    <option value="<%=currentValue.value%>">
+                                                        <%=currentValue.month%>
+                                                    </option>
+                                                <%}%>
+                                        <%  }) } %>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="hidden" name="page_no" value="1"> -->
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary" name="filter" value="1">Filter</button>
+                                    <button type="submit" class="btn btn-default" name="filter" value="2">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <%- include ('./partials/admin_messages') %>
+
+                    <table id="example2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>User Email</th>
+								<th>Day of Week</th>
+                                <th>Name & Type of Product</th>
+								<th>Public Entry</th>                                								
+                                <th>Cannabinoid Profile</th>
+                                <th>Terpenses</th>
+                                <th>Symptoms</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                        if(data.records && data.records.length > 0){
+                            data.records.forEach((userDiary)=>{
+							
+                        %>
+                            <tr>
+                                <td><%=userDiary.user_name%></td>
+                                <td><%=userDiary.user_email%></td>
+								<td><%=userDiary.day_of_week%></td>
+                                <td><%=userDiary.product_name%></td>								
+								<td><%=userDiary.is_public == 1 ? 'Yes' : 'No'%></td>                                
+                                <td>
+									
+									<%= userDiary.cannabinoid_profile %>
+                                    
+                                </td>
+                                <td>
+									<%= userDiary.terpenes %>
+								</td>
+                                <td>
+									<%= userDiary.pre_symptoms %>
+								</td>
+                                
+                                <td>
+                                    <a href="/admin/userdiarylist/view/<%= userDiary._id%>" class="btn btn-primary btn-xs" style="color:#fff"><i class="fa fa-eye"></i></a>
+									<!-- <a href="#" class="btn btn-primary btn-xs" style="color:#fff"><i class="fa fa-eye"></i></a> -->
+                                </td>
+                            </tr>
+                        <% })
+                        } %>
+                        
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>User Name</th>
+                                <th>User Email</th>
+								<th>Day of Week</th>
+                                <th>Name & Type of Product</th>
+								<th>Public Entry</th>                                								
+                                <th>Cannabinoid Profile</th>
+                                <th>Terpenses</th>
+                                <th>Symptoms</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <%- include('partials/pagination')%>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</section>
+<%- contentFor('page_js') %>
+<script>
+        //     $( document ).ready(function() {
+        //     if($('#selectOption').val() === "0")
+        //         $('#dateRangeInput').show();
+        //     else 
+        //         $('#dateRangeInput').hide();
+
+        //     $('#selectOption').on('change', function () {
+        //         if ($(this).val() === "0")
+        //             $('#dateRangeInput').show();
+        //         else 
+        //             $('#dateRangeInput').hide();
+        //     });
+        // });
+        
+        // $(function () {
+        //     $('input[name="daterange"]').daterangepicker(
+        //         {
+        //             opens: 'left',
+        //         },
+        //         function (start, end, label) {
+        //             console.log('A new date selection was made: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        //         }
+        //     );
+        // });
+</script>

@@ -1,0 +1,33 @@
+[{
+    "_id": 1,
+    "product_name": "Mango Gummies",
+    "category": "Edible",
+    "entries": "5201",
+    "rating": "5",
+    "brand": "KIVA"
+  },
+  {
+    "_id": 2,
+    "product_name": "Mango Gummies",
+    "category": "Tincture",
+    "entries": "5201",
+    "rating": "4",
+    "brand": "Area 52"
+  },
+  {
+    "_id": 3,
+    "product_name": "Mango Gummies",
+    "category": "Pre-rolls",
+    "entries": "5201",
+    "rating": "3",
+    "brand": "Finest Labs"
+  },
+  {
+    "_id": 3,
+    "product_name": "Mango Gummies",
+    "category": "Vapes",
+    "entries": "5201",
+    "rating": "4",
+    "brand": "Exhale Wellness"
+  }
+]

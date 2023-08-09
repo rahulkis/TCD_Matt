@@ -1,0 +1,92 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!--<div class="box-header with-border">
+                    <h3 class="box-title">Filter</h3>
+                    <div class="box-tools pull-right">
+                        <a href="/admin/settings/my-entourage" class="btn btn-primary">Add New Entourage</a>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>-->
+                <!-- /.box-header -->
+                <!--<div class="box-body">
+                    <form class="form-material" method="post">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Video Title</label>
+                                    <input type="text" name="title" placeholder="Video Title" class="form-control form-control-line" value="">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary" name="filter" value="1">Filter</button>
+                                    <button type="submit" class="btn btn-default" name="filter" value="2">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>-->
+            </div>
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">My Entourage List</h3>
+                </div>
+                <div class="box-body">
+                    <%- include ('./partials/admin_messages') %>
+                    <table id="example2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class="headings">
+                                <th>Name</th>
+                                <th>Image</th>
+                                <th>Selection Number</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                        if(data.entourage && data.entourage.length > 0){
+                            data.entourage.forEach((individualeEntourage)=>{
+                        %>
+                            <tr>
+                                <td><%=individualeEntourage.entourage_name%></td>
+                                <td>
+                                    <img src="<%=`https://tcd-project.s3.us-west-2.amazonaws.com/tcd-admin/entourage//${individualeEntourage.image}`%>" alt="<%= individualeEntourage.image%>" style="height: 50px; width: 50px;">
+                                </td>
+                                <td><%=individualeEntourage.max_selection%></td>
+                                <td><% if(individualeEntourage.is_active===1){ %>
+                                    <span class="chip green lighten-5">
+                                    <span class="green-text">Active</span>
+                                    </span>
+                                    <% }else{ %>
+                                    <span class="chip red lighten-5">
+                                    <span class="red-text">Inactive</span>
+                                    </span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <div class="row text-center">
+                                        <div class="col-md-1">
+                                            <a href="/admin/settings/my-entourage/update?id=<%= individualeEntourage._id%>" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-edit"></i></a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% })
+                        } %>
+                        </tbody>
+                    </table>
+                    <%- include('partials/pagination')%>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</section>
+<%- contentFor('page_js') %>

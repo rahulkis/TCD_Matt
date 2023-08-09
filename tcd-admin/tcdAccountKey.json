@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "the-cannabis-diary-ec312",
+  "private_key_id": "d646469361a68bce59d128462ae9c478f6e10f79",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCa60y3K6hIU/aS\nie4aMO6HYNu/fxy1WjP4C6gVoaDis27t7jdkl5dnZkIAVhxMtB/GGluxuprOFEJL\nEOrgQ06l7g3zmuNuAXA87Vbh38B9KOyYoOcbU+9SjNN1PBDp0nD+8ClSCOvuw3Xm\nGuZw1OW172+MCvlyAMBxIzZuk2U6GyXHH+IX7ULoljA0PA9S8SCuommnEvIFJrVK\nLCU0DVtO7huSn/Iu05qs3WzcLmWMtpPMBTkqoJyilWZQxZTcDC+JBK9HzPPKfOvV\njzUoVTQE2Mr/U86//qPvjws1DnCLittwn0NnAj3FzaGrouXJKNMJhThuq+QGaU1L\n7tSHT8e5AgMBAAECggEAASxH6sbX6thHVSlsVgclPzQpeBHJh+5G13Th/rUTp48y\nYsAW6/6z1yBeTEdaoe3CWvjZZ5lzdeYiFYIiNkczCwhxLr5c+3jjdXPIBSA6gmE8\nTV4dX4/0WJNzG0jGyW+U+HEvgAzePinGj/djLNsaGLnpmF/tLt5LBHBIB5VNsLG2\neveQ7x8m1jby3oUDf9NKxt4MAKPKa/Tis1HLKOZrIYGbTs8Ah4UNBtwZy7iX+l+j\nxO+p1vl6h8hZLQ4olLapLYpRY9B3AzZEZHLft823i3kUkuO4+vXd3HzrwJrve4P1\nLe4qACc2znMxQPk925/3e4+4ut0c30d5qUhmF2TMowKBgQDPGVlo3AkNMK4KgLr1\nF/kfuzoW5NwjM5ELg1Koz7s5Jc/Gk4edVyH6Qg9m+tvOIwGiRuertiUlJmHceuH5\n1yf69Wfu9hgVUo5qE5XQfHB+FPL7T3Kegc3SkPNwY4gvw46pn9oqlxl7MftxwaCW\nUTOi8qZK4b8d6jT+EX9iVyThRwKBgQC/f8x+jdbkM1GuNimliMtAXKH81nDtF7yb\nVg2tRCWaJco5g01LnmMJmPx8HVXXlh/iJqpmZWTDquqh/EMWpQd9jBjTacVkxVIY\nu67Lr/sCfO72gY2a53yjMn/qqO3LXTkxLFA+MvaGrz0FonwT1vmXXdmU6wLyWX3b\nWRBc9XKO/wJ/Ze4UE4g47EUJZCH34qnp87Qy4xHBR5IZ0ZDRHkUf4QC7QwFZvhck\nogfhjM3rYYnZRAWiAOGlZqN9hwb0MgOzqdEfVn3JXLVFYvBAzFxzAZtN/GMeBuXc\nZ8bwCmDypo+Zp+MFffDgmcH///1NDK7qu0iykCiL6C1d5661A7HgdQKBgQCx6vG6\njtudj1SPMEFHS63TMX1K5I1sqoYQKEZyuYLaEcwt3SD+ZbyMGThTtAmiUBd1TQk6\nM3AIHw75yt8l9dPcwEH8giPkeTPKSO2gzvK+IAcAveMrjXEOSwfvpF2yeP1/AzXW\nZBEJl1xxlMIEyNGB4a8anbJSKfU1yyzZwS1bTwKBgQCJvSDDv0LRbgga1MF6WKuh\nSAl9uRdnYN/4EWwwcNHWVxPpVzghL/J074hTkg1clHZZd5WHDiUepmGdO1+Rzxqe\n3TpEbiGqbp+Kiou7ejutxJruG8yDPw/gvZWDl2LoWkzuRN9QhqdUIpu+SevCZxxb\naOseDSaOPVsouepfaFotYQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-1ag76@the-cannabis-diary-ec312.iam.gserviceaccount.com",
+  "client_id": "106166129841449169318",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-1ag76%40the-cannabis-diary-ec312.iam.gserviceaccount.com"
+}

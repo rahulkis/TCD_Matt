@@ -1,0 +1,200 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <%- include ('./partials/admin_messages') %>
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Update Video</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form action="/admin/video/update?id=<%=data.updatingVideo.id_%>"" id="videoForm" method="post" enctype="multipart/form-data" class="form-material">
+                        <% if(data.updatingVideo.type===1 || data.updatingVideo.type===5){
+                            var type = "introduction" 
+                            var folderName = "introductory" 
+                         }
+                         else if(data.updatingVideo.type===2){
+                            var type="educational"
+                            var folderName = "educational" 
+                         } 
+                         else if(data.updatingVideo.type===3){
+                            var type="news"
+                            var folderName = "news" 
+                         }
+                         else if(data.updatingVideo.type===4){
+                            var type="community"
+                            var folderName = "community" 
+                         }
+                        %>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label> Video Title<span class="required">*</span></label>
+                                    <input type="text" name="title" placeholder="Video Title" class="form-control form-control-line" value="<%=data.updatingVideo.title%>">
+                                </div>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <div class="form-group">
+                                    <label for="type">Video Type:</label> &nbsp; &nbsp;
+                                    <select name="type" id="type" class="form-control form-control-line">
+                                        <%if(data.updatingVideo.type ===1){ %>
+                                            <option value="1" selected>Introduction</option>
+                                            <option value="2">Educational</option>
+                                            <option value="3">News</option>
+                                        <% } %>
+                                        <%if(data.updatingVideo.type ===2){ %>
+                                            <option value="1">Introduction</option>
+                                            <option value="2" selected>Educational</option>
+                                            <option value="3">News</option>
+                                        <%} %>
+                                        <%if(data.updatingVideo.type ===3){ %>
+                                            <option value="1">Introduction</option>
+                                            <option value="2">Educational</option>
+                                            <option value="3" selected>News</option>
+                                        <%} %>
+                                        <%if(data.updatingVideo.type ===4){ %>
+                                            <option value="1">Introduction</option>
+                                            <option value="2">Educational</option>
+                                            <option value="3">News</option>
+                                            <option value="4" selected>Community</option>
+                                        <%} %>
+                                        <%if(data.updatingVideo.type ===5){ %>
+                                            <option value="1">Introduction</option>
+                                            <option value="2">Educational</option>
+                                            <option value="3">News</option>
+                                            <option value="4">Community</option>
+                                            <option value="5" selected>Tutorial</option>
+                                        <%} %>
+                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="author">Author:<span class="required">*</span></label> &nbsp; &nbsp;
+                                    <select name="author" id="author" class="form-control form-control-line" required>
+                                    <% if(data.users && data.users.length > 0){
+                                        data.users.forEach((user)=>{
+                                            let val = (!!data.updatingVideo.author && user._id===data.updatingVideo.author._id)?"selected":"null";
+                                            if(val==="selected"){
+                                    %>
+                                        <option value="<%= user._id %>" selected><%= user.full_name %></option>
+                                    <% }else{%>
+                                        <option value="<%= user._id %>"><%= user.full_name %></option>
+                                    <% }%>
+                                    <% })
+                                    }%>   
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="video_url">Video:</label>
+                                    <input type="file" class="file" data-theme="fa" name="video_url" id="video_url">
+                                    <p id="warning_video_url" style="display: none;"><b style="color:red;">Please select file less than 1mb</b></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <video width="360" height="240" controls>
+                                    <source src="<%=`https://tcd-project.s3.us-west-2.amazonaws.com/tcd-admin/video/${type}/${data.updatingVideo.video_url}`%>" type="video/mp4">
+                                </video>
+                                <br><span><p style="font-weight: bold;text-align: center;margin-top: 40px;">LAST UPLOADED VIDEO</p></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="video_thumb_image">Video Thumb Image:</label>
+                                    <input type="file" class="file" name="video_thumb_image" id="video_thumb_image">
+                                    <p id="warning_video_thumb_image" style="display: none;"><b style="color:red;">Please select file less than 1mb</b></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <img src="<%=`https://tcd-project.s3.us-west-2.amazonaws.com/tcd-admin/video_thumb_image/${folderName}/${data.updatingVideo.video_thumb_image}`%>" alt="<%= data.updatingVideo.video_thumb_image%>" style="height: 100px; width: 100px;margin: 40px auto;">
+                                <br><span><p style="font-weight: bold;">LAST UPLOADED THUMBNAIL</p></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <span style="width: 100%;"><br></span>
+                                <div class="form-group">
+                                    <% let checked = data.updatingVideo.is_active ? "checked" : "" %>
+                                    <input type="checkbox" id="status" name="is_active" value="<%=data.updatingVideo.is_active%>" <%=checked%>>
+                                    <label for="status">Active</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary">Update Video</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</section>
+<%- contentFor('page_js') %>
+<script src="/script/additional-methods.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#video_url').change(function () {
+            if (this.files.length > 0) {
+                $.each(this.files, function (index, value) {
+               var sizeLimit= 1024*1024*100; // size limit 100mb
+               if(value.size>sizeLimit){
+                $('#warning_video_url').show();
+                } 
+                else{
+                   $('#warning_video_url').hide();
+                } 
+                })
+            }
+        });
+        $('#video_thumb_image').change(function () {
+            if (this.files.length > 0) {
+                $.each(this.files, function (index, value) {
+                    var sizeLimit= 1024*1024; //size limit 1mb
+                    if(value.size>sizeLimit){
+                        $('#warning_video_thumb_image').show();
+                    } 
+                    else{
+                        $('#warning_video_thumb_image').hide();
+                    } 
+                })
+            }
+        });
+        $("#videoForm").validate({
+            rules:{
+                title:{
+                    required:true
+                },
+                video_url:{
+                    extension: "mp4"
+                },
+                video_thumb_image:{
+                    extension : "jpg,jpeg,png"
+                }
+            },
+            messages:{
+                video_url:{
+                    extension: "Only .mp4 files allowed"
+                },
+                video_thumb_image:{
+                    extension:"Only image type extension (jpg,jpeg,png) are allowd"
+                }
+            },
+            errorElement:'div'
+        })
+    });
+</script>

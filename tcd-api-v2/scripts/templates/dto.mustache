@@ -1,0 +1,24 @@
+import { ApiProperty } from '@nestjs/swagger';
+import _ from 'lodash';
+import { Expose, Exclude, Type, Transform, plainToClass } from 'class-transformer';
+import { getConvertedDateString, transformToBoolean, getConvertedShortDateString, transformInt } from '@techstyle/utils-sdk';
+
+
+@Exclude()
+export class {{name}} {
+
+    {{#props}}
+    @ApiProperty()
+    @Expose( { name: '{{exposedName}}' } )
+    {{#transformer}}
+    @Transform({{{transformer}}})
+    {{/transformer}}
+    {{propName}}: {{{dataType}}};
+
+    {{/props}}
+    static getInstance(inputObj: object): {{name}} {
+        inputObj = _.transform(inputObj, (result, val, key: string) => { result[key.toLowerCase()] = val; } , {});
+        return plainToClass({{name}}, inputObj);
+    }
+
+}

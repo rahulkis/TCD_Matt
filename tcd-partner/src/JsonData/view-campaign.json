@@ -1,0 +1,25 @@
+[{
+    "campaign_name": "campaign 1",
+    "status": "All ads running",
+    "impression": "12,121",
+    "click": "111"
+  },
+  {
+    "campaign_name": "campaign 2",
+    "status": "All ads running",
+    "impression": "12,121",
+    "click": "111"
+  },
+  {
+    "campaign_name": "campaign 3",
+    "status": "All ads running",
+    "impression": "12,121",
+    "click": "111"
+  },
+  {
+    "campaign_name": "campaign 4",
+    "status": "All ads running",
+    "impression": "12,121",
+    "click": "111"
+  }
+]

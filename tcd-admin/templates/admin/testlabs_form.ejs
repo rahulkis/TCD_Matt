@@ -1,0 +1,149 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <%- include ('./partials/admin_messages')%>
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">New Test Labs</h3>
+                    <div class="pull-right">
+                        <a href="/admin/coa-testlabs/add" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form class="form-material" method="post" action="/admin/coa-testlabs/add" id="coaForm" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="<%=data.details[0]._id%>">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Laboratory Name<span class="required">*</span></label>
+                                    <input type="text" name="labname" placeholder="COA Laboratory Name" class="form-control form-control-line" value="<%=data.details[0].labname%>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Address<span class="required">*</span></label>
+                                    <input type="text" name="address" placeholder="Address" class="form-control form-control-line" value="<%=data.details[0].address%>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>License Number<span class="required">*</span></label>
+                                    <input type="text" name="license_number" placeholder="License Number" class="form-control form-control-line" value="<%=data.details[0].license_number%>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Contact<span class="required">*</span></label>
+                                    <input type="text" name="contact" placeholder="Contact" class="form-control form-control-line" value="<%=data.details[0].contact%>">
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label style="width:100%">&nbsp;</label>
+                                    <% let checked = data.details[0].is_deleted ? "checked" : "" %>
+                                    <input type="checkbox" id="status" name="is_deleted" value="<%=data.details.is_deleted%>" <%=checked%>>
+                                    <label for="status"> Active</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label style="width:100%">&nbsp;</label>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- contentFor('page_js') %>
+<script src="/script/additional-methods.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#dateSet').datepicker({
+			format: 'mm-dd-yyyy',
+			autoclose: true,
+			endDate: new Date()
+        });
+        $("#coaForm").validate({
+            rules:{
+                coa_no:{
+                    required:true
+                },
+                name:{
+                    required:true
+                },
+                description:{
+                    required:true
+                },
+                strain:{
+                    required:true
+                },
+                weight:{
+                    required:true
+                },
+                cannabinoid_profile:{
+                    required:true
+                },
+                cannabinoid_weight:{
+                    required:true
+                },
+                terpenes:{
+                    required: true
+                },
+                terpenes_weight:{
+                    required:true
+                },
+                coa_image:{
+                    extension: "jpg,jpeg,png"
+                }
+            },
+            messages:{
+				coa_image: {
+					extension: "Only image type extensions (jpg,jpeg,png) are allowed"
+				}
+			},
+            errorElement:'div'
+        })
+        $('#coa_image').change(function () {
+            if (this.files.length > 0) {
+                $.each(this.files, function (index, value) {
+               var sizeLimit= 1024*1024; //size limit 1 mb
+               if(value.size>sizeLimit){
+                  $('#warning_image').show();
+               } 
+               else{
+                    $('#warning_image').hide();
+               } 
+                })
+            }
+        });
+		$(".percent_field").on("keydown", function() {
+			pastValue          = this.value;
+			pastSelectionStart = this.selectionStart;
+			pastSelectionEnd   = this.selectionEnd;
+		}).on("input propertychange", function() {
+			var regex = /^(100(\.0{0,2})?|(\d|[1-9]\d)(\.\d{0,2})?)$/;
+						
+			if (this.value.length > 0 && !regex.test(this.value)) {
+			this.value          = pastValue;
+			this.selectionStart = pastSelectionStart;
+			this.selectionEnd   = pastSelectionEnd;
+			}
+		});
+    });
+</script>

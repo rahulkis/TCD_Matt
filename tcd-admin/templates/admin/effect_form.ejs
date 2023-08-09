@@ -1,0 +1,184 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <%- include ('./partials/admin_messages') %>
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">New Effect</h3>
+                    <div class="pull-right">
+                        <a href="/admin/effect" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form class="form-material" method="post" action="/admin/effect/manage" id="effectForm" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="<%=data.details._id%>">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category">Parent Effect:</label> 
+                                    <%
+                                    let choosedId = data.details.parent_id;
+                                    %>
+                                    <select name="parent_id" id="parentPrdType" class="form-control form-control-line">
+                                        <option value="">Select Parent Type</option>
+                                        <%if(data.parent_effects){
+                                            data.parent_effects.forEach((effect) => {
+                                                let recordSelected="";
+                                                if(effect._id.equals(choosedId)){
+                                                    recordSelected="selected";
+                                                }
+                                            %>
+                                            <option value="<%=effect._id%>" <%=recordSelected%> ><%=effect.name%></option>
+                                            <%
+                                            })
+                                        }%>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Effect<span class="required">*</span></label>
+                                    <input type="text" name="name" placeholder="Name" class="form-control form-control-line" value="<%=data.details.name%>">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Image (Minimum 750 X 500 Pixels)</label>
+                                    <input type="file" id="effect_image" name="effect_image" class="form-control-line">
+                                    <p id="warning_image" style="display: none;"><b style="color:red;">Please select file less than 1mb</b></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label style="width:100%">&nbsp;</label>
+                                <% if(data.details.image){  %>
+                                <img src="<%=data.details.image%>" alt="<%= data.details.name%>" style="height: 50px; width: 50px;">
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Icon (Minimum 60 X 40 Pixels)</label>
+                                    <input type="file" id="effect_icon" name="effect_icon" class="form-control-line">
+                                    <p id="warning_icon" style="display: none;"><b style="color:red;">Please select file less than 1mb</b></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label style="width:100%">&nbsp;</label>
+                                <% if(data.details.icon){  %>
+                                <img src="<%=data.details.icon%>" alt="<%= data.details.name%>" style="height: 50px; width: 50px;">
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Display Order<span class="required">*</span></label>
+                                    <input type="text" name="sort_order" placeholder="Display Order" class="form-control form-control-line" value="<%=data.details.sort_order%>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                   <label style="width:100%">&nbsp;</label>
+                                   <% let checked = data.details.is_active ? "checked" : "" %>
+                                   <input type="checkbox" id="status" name="is_active" value="1" <%=checked%>>
+                                   <label for="status"> Active</label>
+                                </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- contentFor('page_js') %>
+<script src="/script/additional-methods.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#effect_image').change(function () {
+            if (this.files.length > 0) {
+                $.each(this.files, function (index, value) {
+               var sizeLimit= 1024*1024; //size limit 1 mb
+               if(value.size>sizeLimit){
+                  $('#warning_image').show();
+               } 
+               else{
+                    $('#warning_image').hide();
+               }   
+                })
+            }
+        });
+        $('#effect_icon').change(function () {
+            if (this.files.length > 0) {
+                $.each(this.files, function (index, value) {
+               var sizeLimit= 1024*1024; //size limit 1 mb
+               if(value.size>sizeLimit){
+                $('#warning_icon').show();
+               }
+               else{
+                   $('#warning_icon').hide();
+               }   
+                })
+            }
+        });
+        
+        $("#effectForm").validate({
+            rules:{
+                name:{
+                    required:true
+                },
+                sort_order:{
+                    required:true,
+                    Number:true
+                }
+            },
+            messages:{
+				
+			},
+            errorElement:'div'
+        })
+        
+        $("#symptomForm").validate({
+            rules:{
+                name:{
+                    required:true
+                },
+                symptom_image:{
+                    extension: "jpg,jpeg,png"
+                },
+                symptom_icon:{
+                    extension: "jpg,jpeg,png"
+                }
+            },
+            messages:{
+				symptom_image: {
+					extension: "Only image type extensions (jpg,jpeg,png) are allowed"
+				},
+                symptom_icon: {
+					extension: "Only image type extensions (jpg,jpeg,png) are allowed"
+				}
+			},
+            errorElement:'div'
+        });
+    
+    });
+
+    
+    
+</script>

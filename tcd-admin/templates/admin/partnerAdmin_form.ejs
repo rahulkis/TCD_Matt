@@ -1,0 +1,125 @@
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <form action="/admin/partner-admin/manage" id="siteForm" method="post" enctype="multipart/form-data"
+                        class="form-material">
+                        <input type="hidden" name="id" value="<%=data.details._id%>">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <% if (data.details.profile_image !='' ) {%>
+                                    <img src="https://tcd-project.s3.us-west-2.amazonaws.com/tcd-admin/profile_image/<%=data.details.profile_image%>"
+                                        alt="<%=data.details.full_name%>" height="150px" weight="150px">
+                                    <% } %>
+                                        <div class="form-group">
+                                            <label>Upload Picture</label>
+                                            <input type="file" accept="image/*" name="profile_image">
+                                        </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Name<span class="required">*</span></label>
+                                    <input type="text" placeholder="Name" name="full_name"
+                                        value="<%=data.details.full_name%>" class="form-control form-control-line">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Email<span class="required">*</span></label>
+                                    <input type="text" placeholder="Email" name="email" value="<%=data.details.email%>"
+                                        class="form-control form-control-line" <%=data.details.email ? 'readonly' :''%>>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Phone<span class="required">*</span></label>
+                                    <input type="text" placeholder="Phone" name="contact_no"
+                                        value="<%=data.details.contact_no%>"
+                                        class="form-control form-control-line us_phone">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="example-email">Gender<span class="required">*</span></label>
+                                <select class="form-control" name="gender">
+                                    <option value="Male" <%=data.details.gender=='Male' ? 'selected' : '' %>>Male
+                                    </option>
+                                    <option value="Female" <%=data.details.gender=='Female' ? 'selected' : '' %>>Female
+                                    </option>
+                                    <option value="Others" <%=data.details.gender=='Others' ? 'selected' : '' %>>Others
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Password<span class="required"><%= data.details.crud_type == 'Add' ? '*' : '' %></span></label>
+                                    <input type="password" placeholder="Password" name="new_password" minlength="8"
+                                        value="" class="form-control form-control-line" <%= data.details.crud_type == 'Add' ? 'required' : '' %>>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Confirm Password<span class="required"><%= data.details.crud_type == 'Add' ? '*' : '' %></span></label>
+                                    <input type="password" placeholder="Conform Password" name="new_confirm_password" minlength="8"
+                                        value="" class="form-control form-control-line" <%= data.details.crud_type == 'Add' ? 'required' : '' %>>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <input type="checkbox" name="is_active" value="1" <%=data.details.is_active==1
+                                        ? 'checked' : '' %>>
+                                    <label for="status">Active</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+</section>
+
+<%- contentFor('page_js') %>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.us_phone').on('input', function (e) {
+                var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+                e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+            })
+            $("#siteForm").validate({
+                rules: {
+                    full_name: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    contact_no: {
+                        required: true
+                    }
+                },
+                errorElement: 'div'
+            })
+        })
+    </script>

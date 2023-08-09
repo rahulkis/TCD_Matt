@@ -1,0 +1,63 @@
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <form action="/admin/consumption-reason/manage" id="cFrequencyForm" method="post" class="form-material">
+                        <input type="hidden" name="id" value="<%=data.details._id%>">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Name<span class="required">*</span></label>
+                                    <input type="text" placeholder="Name" name="name" value="<%=data.details.name%>" class="form-control form-control-line">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                <label style="width:100%">&nbsp;</label>
+                                  <% let checked = data.details.is_active ? "checked" : "" %>
+                                   <input type="checkbox" id="status" name="is_active" value="1" <%=checked%>>
+                                   <label for="status">Active</label>
+                                </div>
+                            </div>
+                        </div>
+                                
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">
+                                        <% if (data.details._id) {%>
+                                            Update Consumption Reason
+                                        <% }else{ %>
+                                            Add Consumption Reason
+                                        <% } %>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form> 
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+</section>
+    
+<%- contentFor('page_js') %>
+<script src="/script/additional-methods.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#cFrequencyForm").validate({
+            rules:{
+                name:{
+                    required:true
+                },
+            },
+			messages:{
+				
+			},
+            errorElement:'div'
+        })
+    })
+</script>

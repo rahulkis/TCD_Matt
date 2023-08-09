@@ -1,0 +1,137 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+          
+        <div class="col-md-4">
+            
+            <!-- Profile Image -->
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <% if(data.userInfo.profile_image.length > 0) { %>
+                    <img class="profile-user-img img-responsive img-circle" src="https://tcd-project.s3.us-west-2.amazonaws.com/tcd-admin/profile_image/<%=data.userInfo.profile_image%>" alt="User profile picture">
+                    <%}else{%>
+                        <img class="profile-user-img img-responsive img-circle" src="/images/avatar5.png" alt="User profile picture">
+                    <%}%>
+                    <h3 class="profile-username text-center"><%=data.userInfo.full_name%></h3>
+    
+                    <ul class="list-group list-group-unbordered">
+                    <li class="list-group-item">
+                        <b>Email</b> <a class="pull-right"><%=data.userInfo.email%></a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Phone</b> <a class="pull-right"><%=data.userInfo.contact_no%></a>
+                    </li>
+					<li class="list-group-item">
+                        <b>Gender</b> <a class="pull-right"><%=data.userInfo.gender%></a>
+                    </li>
+                    
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+          
+        <div class="col-md-8">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#settings" data-toggle="tab" aria-expanded="true">Admin Profile</a></li>
+                    <!-- <li class=""><a href="#timeline" data-toggle="tab" aria-expanded="false">Profile</a></li>-->
+                
+                </ul>
+                <div class="tab-content">
+                    <%- include ('./partials/admin_messages') %>
+                    <div class="tab-pane active" id="settings">
+                        <form action="/admin/profile" enctype="multipart/form-data" method="post" class="form-material" id="adminProfileForm">                           
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Upload Picture</label>
+                                        <input type="file" name="profile_image">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Name<span class="required">*</span></label>
+                                        <input type="text" placeholder="Name" name="full_name" value="<%=data.userInfo.full_name%>" class="form-control form-control-line">
+                                    </div>
+                                </div>
+								<div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-email">Email<span class="required">*</span></label>
+                                        <input type="text" name="email" class="form-control form-control-line" value="<%=data.userInfo.email%>">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-email">Phone<span class="required">*</span></label>
+                                            <input type="text" name="contact_no" value="<%=data.userInfo.contact_no%>" placeholder="Contact no" class="form-control form-control-line us_phone">
+                                    </div>
+                                </div>
+								<div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-email">Gender<span class="required">*</span></label>
+										<select class="form-control" name="gender">
+											<option value="Male" <%=data.userInfo.gender == 'Male' ? 'selected' : ''%>>Male</option>
+											<option value="Female" <%=data.userInfo.gender == 'Female' ? 'selected' : ''%>>Female</option>
+											<option value="Others" <%=data.userInfo.gender == 'Others' ? 'selected' : ''%>>Others</option>
+										</select>
+                                    </div>
+                                </div>
+							</div>	
+                                
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+  
+</section>
+<%- contentFor('page_js') %>
+<script src="/script/additional-methods.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.us_phone').on('input', function (e) {
+			var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+			e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+		})
+        $("#adminProfileForm").validate({
+            rules:{
+				profile_image: {
+					extension: "jpg,jpeg,png"
+				},
+				full_name:{
+					required:true
+				},
+                email:{
+                    required:true,
+					email:true
+                },
+				contact_no:{
+					required:true
+				}
+            },
+			messages:{
+				profile_image: {
+					extension: "Only image type extensions (jpg,jpeg,png) are allowed"
+				}
+			},
+            errorElement:'div'
+        })
+    })
+</script>

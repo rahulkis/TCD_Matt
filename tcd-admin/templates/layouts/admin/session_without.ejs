@@ -1,0 +1,34 @@
+<%
+let projectName = "TCD";
+let pageTitle = (data.pageTitle)?'|'+data.pageTitle:'';
+%>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title><%=projectName+pageTitle%></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/icon-font.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/util.css">
+        <link rel="stylesheet" type="text/css" href="/css/main.css">
+        <link rel="stylesheet" href="/css/tcd.css"> 
+        <%- defineContent('page_css')%>
+    </head>
+    <body>
+        <div class="limiter">
+            <div class="container-login100">
+                <div class="wrap-login100 p-l-50 p-r-50 p-t-60 p-b-60">
+                    <%- defineContent('body')%>
+                </div>
+            </div>
+        </div>
+		<script src="/script/jquery.min.js"></script>
+        <script src="/script/jquery.validate.min.js"></script>
+        <%- defineContent('page_js')%>
+    </body>
+</html>

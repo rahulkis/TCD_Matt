@@ -1,0 +1,158 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Filter</h3>
+                    <div class="box-tools pull-right">
+                        <a href="/admin/video/add" class="btn btn-primary">Add New Video</a>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form class="form-material" method="post">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Video Title</label>
+                                    <input type="text" name="title" placeholder="Video Title" class="form-control form-control-line" value="<%=data.filterDatas.title%>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary" name="filter" value="1">Filter</button>
+                                    <button type="submit" class="btn btn-default" name="filter" value="2">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">Video List</h3>
+                </div>
+                <div class="box-body">
+                    <%- include ('./partials/admin_messages') %>
+                    <table id="example2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class="headings">
+                                <th>Video Title</th>
+                                <th>Video</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                        if(data.records && data.records.length > 0){
+                            data.records.forEach((individualVideo)=>{
+                        %>
+                            <tr> 
+                                <% if(individualVideo.type===1 || individualVideo.type===5){
+                                    var type = "introductory" 
+                                 }
+                                 else if(individualVideo.type===2){
+                                     var type="educational"
+                                 } 
+                                 else if(individualVideo.type===3){
+                                     var type="news"
+                                 }
+                                 else if(individualVideo.type===4){
+                                     var type="community"
+                                 }
+                                 %>
+                                <td><%=individualVideo.title%></td>
+                                <td>
+                                    <a href="#id_<%= individualVideo._id %>" id="<%= individualVideo._id %>">
+                                        <img src="<%=`https://tcd-project.s3.us-west-2.amazonaws.com/tcd-admin/video_thumb_image/${type}/${individualVideo.video_thumb_image}`%>" alt="<%= individualVideo.video_thumb_image%>" style="height: 50px; width: 50px;">
+                                    </a>
+                                    <div id="id_<%= individualVideo._id %>" class="mfp-hide" style="max-width: 75%;margin: 0 auto;">
+                                        <video width="853" height="480" controls>
+                                            <source src="<%=`https://tcd-project.s3.us-west-2.amazonaws.com/tcd-admin/video/${type}/${individualVideo.video_url}`%>" type="video/mp4">
+                                        </video>
+                                    </div>
+                                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" integrity="sha512-+EoPw+Fiwh6eSeRK7zwIKG2MA8i3rV/DGa3tdttQGgWyatG/SkncT53KHQaS5Jh9MNOT3dmFL0FjTY08And/Cw==" crossorigin="anonymous" />
+                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js" integrity="sha512-IsNh5E3eYy3tr/JiX2Yx4vsCujtkhwl7SLqgnwLNgf04Hrt9BT9SXlLlZlWx+OK4ndzAoALhsMNcCmkggjZB1w==" crossorigin="anonymous"></script>
+                                    <style>                            
+                                    .mfp-hide{
+                                        display: none !important;
+                                    }
+                                    button.mfp-close{
+                                        overflow: visible;
+                                        cursor: pointer;
+                                        background: white;
+                                        border: 0;
+                                        -webkit-appearance: none;
+                                        display: block;
+                                        outline: 0;
+                                        padding: 0;
+                                        z-index: 1046;
+                                        box-shadow: none;
+                                    }
+                                    .mfp-close{
+                                        width: 44px;
+                                        height: 44px;
+                                        border-radius: 50px;
+                                        line-height: 44px;
+                                        position: absolute;
+                                        right: 40px;
+                                    }
+                                    </style>    
+                                    <script>
+                                    $("#<%= individualVideo._id %>").magnificPopup({
+                                        type:'inline',
+                                        midClick:true
+                                    })
+                                    </script>    
+                                </td>
+                                <td>
+                                    <%= data.video_type[individualVideo.type]%>
+                                </td>
+                                <td><% if(individualVideo.is_active){ %>
+                                    <span class="chip green lighten-5">
+                                    <span class="green-text">Active</span>
+                                    </span>
+                                    <% }else{ %>
+                                    <span class="chip red lighten-5">
+                                    <span class="red-text">Inactive</span>
+                                    </span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <div class="row text-center">
+                                        <div class="col-md-1">
+                                            <a href="/admin/video/update?id=<%= individualVideo._id%>" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-edit"></i></a>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <form class="form-material" method="post" action="/admin/video/delete?id=<%=individualVideo._id%>">
+                                                <div class="form-group">
+                                                    <button type="submit"class="btn btn-danger btn-xs" style="color:#fff" onclick="return confirm('Are you sure,you want to delete this record ?')"><i class="fa fa-trash"></i></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <a href="/admin/video/comments/<%= individualVideo._id%>" class="btn btn-warning btn-xs" style="color:#fff" title="View Comments"><i class="fa fa-comment"></i></a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% })
+                        } %>
+                        </tbody>
+                    </table>
+                    <%- include('partials/pagination')%>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</section>
+<%- contentFor('page_js') %>

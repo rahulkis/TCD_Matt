@@ -1,0 +1,26 @@
+service: tcd-api-v2
+
+plugins:
+ - 'serverless-plugin-typescript'
+ - serverless-plugin-optimize
+ - serverless-offline
+ - serverless-dotenv-plugin
+
+provider:
+ name: aws
+ runtime: nodejs14.x
+ region: us-west-2
+ deploymentMethod: direct
+
+package:
+  individually: true
+
+functions:
+ main: # The name of the lambda function
+   # The module 'handler' is exported in the file 'src/lambda'
+   handler: src/lambda.handler
+   events:
+     - http:
+         cors: true
+         method: any
+         path: /{any+}

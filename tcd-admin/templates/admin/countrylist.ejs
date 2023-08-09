@@ -1,0 +1,98 @@
+<section class="content">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Filter</h3>
+            <div class="box-tools pull-right">
+                <a href="/admin/country/add" class="btn btn-primary">Add New Country</a>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <form class="form-material" method="post">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Country</label>
+                            <input type="text" name="search_text" placeholder="Country" class="form-control form-control-line" value="<%=data.filterDatas.search_text%>">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label style="width:100%">&nbsp;</label>
+                            <% let checked = (data.filterDatas.is_active==1) ? "checked" : "" %>
+                            <input type="checkbox" id="status" name="is_active" value="1" <%=checked%>>
+                            <label for="status">Active</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label style="width:100%">&nbsp;</label>
+                            <button type="submit" class="btn btn-primary" name="filter" value="1">Filter</button>
+                            <button type="submit" class="btn btn-default" name="filter" value="2">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">Country List</h3>
+                </div>
+                <div class="box-body">
+                    <%- include ('./partials/admin_messages') %>
+                    <table id="example2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class="headings">
+                                <th>Country Name</th>
+                                <th>Alternative Name</th>
+                                <th>Local Name</th>
+                                <th>Status</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                        if(data.records && data.records.length > 0){
+                            data.records.forEach((record)=>{
+                        %>
+                            <tr id="id_<%= record._id %>"> 
+                                <td><%=record.name%></td>
+                                <td><%=record.alternative_name%></td>
+                                <td><%=record.local_name%></td>
+                                <td><% if(record.is_active){ %>
+                                    <span class="chip green lighten-5">
+                                    <span class="green-text">Active</span>
+                                    </span>
+                                    <% }else{ %>
+                                    <span class="chip red lighten-5">
+                                    <span class="red-text">Inactive</span>
+                                    </span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    
+                                    <a href="/admin/country/update/<%= record._id%>" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-edit"></i></a>
+                                    <a href="/admin/country/delete/<%= record._id%>" class="btn btn-danger btn-xs removerecord" style="color:#fff"><i class="fa fa-trash-o"></i></a>
+                                        
+                                </td>
+                            </tr>
+                        <% })
+                        } %>
+                        </tbody>
+                    </table>
+                    <%- include('partials/pagination')%>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</section>
+<%- contentFor('page_js') %>

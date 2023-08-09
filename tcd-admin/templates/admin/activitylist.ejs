@@ -1,0 +1,237 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">New Activity</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form class="form-material" method="post" action="/admin/activity/add" enctype="multipart/form-data" id="activityForm">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Activity Name<span class="required">*</span></label>
+                                    <input type="text" name="name" placeholder="Activity Name" class="form-control form-control-line" value="<%=data.name%>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Image (Minimum 750 X 500 Pixels)</label>
+                                    <input type="file" id="activity_image" name="activity_image" class="form-control-line">
+									<!-- <div class="img_dimension" style="display:none;">Image size not match</div> 
+									<input type="hidden" id="width" />
+									<input type="hidden" id="height" /> -->
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Icon (Minimum 60 X 40 Pixels)</label>
+                                    <input type="file" id="activity_icon" name="activity_icon" class="form-control-line">
+                                    <p id="warning_icon" style="display: none;"><b style="color:red;">Please select file less than 1mb</b></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                <label style="width:100%">&nbsp;</label>
+                                  <input type="checkbox" id="status" name="is_active" value='1' checked>
+                                  <label for="status"> Active</label>
+                                </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary">Add Activity</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-header with-border">
+					<h3 class="box-title">Filter</h3>
+                    <form class="form-material" method="post">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Activity Name</label>
+                                    <input type="text" name="name" placeholder="Activity Name" class="form-control form-control-line" value="<%=data.filterDatas.name%>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <% let checked = (data.filterDatas.is_active==1) ? "checked" : "" %>
+                                    <input type="checkbox" id="status" name="is_active" value="1" <%=checked%>>
+                                    <label for="status">Active</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary" name="filter" value="1">Filter</button>
+                                    <button type="submit" class="btn btn-default" name="filter" value="2">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="box-body">
+                    <%- include ('./partials/admin_messages') %>
+                    <table id="example2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class="headings">
+                                <th>Activity Name</th>
+                                <th>Parent Activity</th>
+                                <th>Image</th>
+                                <th>Icon</th>
+                                <th>Sort Order Number</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                        if(data.records && data.records.length > 0){
+                            data.records.forEach((record)=>{
+                        %>
+                            <tr id="id_<%= record._id %>"> 
+                                <td><%=record.activity_name%></td>
+                                <td><%=record.parent_name%></td>
+                                <td>
+                                    <% if(record.image){%>
+                                        <img src="<%=record.image%>" alt="<%= record.name%>" style="height: 50px; width: 50px;">
+                                    <%}%>
+                                </td>
+                                <td>
+                                    <% if(record.icon){%>
+                                        <img src="<%=record.icon%>" alt="<%= record.name%>" style="height: 50px; width: 50px;">
+                                    <%} %>
+                                </td>
+                                <td><%=record.sort_order%></td>
+                                <td><% if(record.is_active){ %>
+                                    <span class="chip green lighten-5">
+                                    <span class="green-text">Active</span>
+                                    </span>
+                                    <% }else{ %>
+                                    <span class="chip red lighten-5">
+                                    <span class="red-text">Inactive</span>
+                                    </span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <div class="row text-center">
+                                        <div class="col-md-1">
+                                            <a href="/admin/activity/update?id=<%= record._id%>" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-edit"></i></a>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <form class="form-material" method="post" action="/admin/activity/delete?id=<%=record._id%>">
+                                                <div class="form-group">
+                                                   <button type="submit" class="btn btn-danger btn-xs" style="color:#fff" onclick="return confirm('Are you sure,you want to delete this record ?')"><i class="fa fa-trash"></i></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% })
+                        } %>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</section>
+<%- contentFor('page_js') %>
+<script>
+    $('tbody').sortable({
+        items:"tr:not('.headings')",
+        placeholder:'bg-warning',
+        update:function(){
+            const ids = $('tbody').sortable('serialize');
+            console.log(ids);
+            $.post('/admin/activity/manage-ordering',ids,function(res){
+                console.log(res);
+                // if(res.status == 1){
+                //     window.location = "/admin/activity";
+                // }
+            })
+        }
+    });
+</script>
+<script>
+    $('tbody').sortable({
+        items:"tr:not('.headings')",
+        placeholder:'bg-warning',
+        update:function(){
+           const ids = $('tbody').sortable('serialize');
+           console.log(ids);
+           $.post('/admin/activity/manage-ordering',ids,function(res){
+               console.log(res);
+           })
+        }
+    });
+</script>
+<script src="/script/additional-methods.js"></script>
+<script>
+	
+	/* $("#activity_image").change(function (e) {
+		$('.img_dimension').css('display','none')
+		var _URL = window.URL || window.webkitURL;
+		var file, img;
+		if ((file = this.files[0])) {
+			img = new Image();
+			img.onload = function () {
+			var width=this.width;
+			 var height=this.height;
+			  $("#width").html(width);
+			  $("#height").html(height);
+			 if(width > 500 || height > 500)
+			 {
+			   alert("Width and heigth should not be more than 200px ");
+			   $('.img_dimension').css('display','block')
+			   $("#activity_image").val('')
+			 }                          
+			};
+			img.src = _URL.createObjectURL(file);
+		}
+	}); */
+    
+
+    $(document).ready(function () {		
+        
+        $("#activityForm").validate({
+            rules:{
+                name:{
+                    required:true
+                },
+                activity_image:{
+                    extension: "jpg,jpeg,png"
+                },
+                activity_icon:{
+                    extension: "jpg,jpeg,png"
+                }
+            },
+            messages:{
+				activity_image: {
+					extension: "Only image type extensions (jpg,jpeg,png) are allowed"
+				},
+                activity_icon: {
+					extension: "Only image type extensions (jpg,jpeg,png) are allowed"
+				}
+			},
+            errorElement:'div'
+        });
+    });
+</script>

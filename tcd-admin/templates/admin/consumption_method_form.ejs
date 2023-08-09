@@ -1,0 +1,141 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <%- include ('./partials/admin_messages') %>
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">New Method</h3>
+                    <div class="pull-right">
+                        <a href="/admin/composition-methods" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form class="form-material" method="post" action="/admin/consumption-methods/manage" enctype="multipart/form-data" id="consumptionMethodForm">
+                        <input type="hidden" name="id" value="<%=data.details._id%>">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Name<span class="required">*</span></label>
+                                    <input type="text" name="name" placeholder="Composition Name" class="form-control form-control-line" value="<%=data.details.name%>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category">Parent Composition:</label> 
+                                    <%
+                                    let choosedParentMethodId = data.details.parent_method_id;
+                                    %>
+                                    <select name="parent_method_id" id="parent_method_id" class="form-control form-control-line">
+                                        <option value="">Select Parent Composition</option>
+                                        <%if(data.parent_methods){
+                                            data.parent_methods.forEach((method) => {
+                                                let methodSelected="";
+                                                if(method._id.equals(choosedParentMethodId)){
+                                                    methodSelected="selected";
+                                                }
+                                            %>
+                                            <option value="<%=method._id%>" <%=methodSelected%> ><%=method.name%></option>
+                                            <%
+                                            })
+                                        }%>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Image</label>
+                                    <input type="file" id="icon" name="method_icon" class="form-control-line" data-file_ext="jpg,jpeg,png" accept="image/*">
+                                    <p id="warning_image"></p>
+                                </div>
+                                <% if(data.details.icon){ %>
+                                <div>
+                                    <img src="<%=`https://tcd-project.s3.us-west-2.amazonaws.com/tcd-admin/method/${data.details.icon}`%>" alt="<%= data.details.name%>" style="height: 50px; width: 50px;">
+                                    <br><span><p style="font-weight: bold;">LAST UPLOADED ICON</p></span>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="row">  
+                            <div class="col-md-6">
+                                <label for="category">Measurement Scale:</label>
+                                <select name="measurement_scale[]"  class="form-control form-control-line select2" multiple="true">
+                                    <option value="">--Select--</option>
+                                    
+                                    <%if(data.weights){
+                                        data.weights.forEach((weight) => {
+                                            var scaleSelected="";
+                                            if(data.details.scales.length > 0){
+                                                if( data.details.scales.indexOf(weight) > -1 ){
+                                                    scaleSelected = "selected"
+                                                }
+                                            }
+                                        %>
+                                        <option value="<%=weight%>" <%=scaleSelected%> ><%=weight%></option>
+                                        <%
+                                        })
+                                    }%>
+                                    
+                                </select>
+                            </div> 
+                            <div class="col-md-6">
+                                <label for="category">Measurement Units:</label>
+                                <%
+                                    let choosedUnit = data.details.measurement_unit;
+                                %>
+                                <select name="measurement_unit"  class="form-control form-control-line">
+                                    <option value="">--Select--</option>
+                                    <%if(data.measurement_units){
+                                        data.measurement_units.forEach((unit) => {
+                                            let unitSelected="";
+                                            if(unit.name == choosedUnit){
+                                                unitSelected="selected";
+                                            }
+                                        %>
+                                        <option value="<%=unit.name%>" <%=unitSelected%> ><%=unit.name%></option>
+                                        <%
+                                        })
+                                    }%>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row"> 
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                        <% let checked = data.details.is_active ? "checked" : "" %>
+                                        <input type="checkbox" id="status" name="is_active" value="<%=data.details.is_active%>" <%=checked%>>
+                                        <label for="status">Active</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- contentFor('page_js') %>
+<script>
+    $(document).ready(function () {
+        $("#consumptionMethodForm").validate({
+            rules:{
+                name:{
+                    required:true
+                }
+            },
+            errorElement:'div'
+        })
+    });
+</script>

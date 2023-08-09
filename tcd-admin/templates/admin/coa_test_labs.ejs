@@ -1,0 +1,58 @@
+<section class="content">
+    <div class="box-header with-border">
+        <h3 class="box-title">Filter</h3>
+        <div class="box-tools pull-right">
+            <a href="/admin/coa-testlabs/add" class="btn btn-primary">Add Test Labs</a>
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        </div>
+    </div>
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-header with-border">
+                    <h3 class="box-title">COA List</h3>
+                </div>
+                <div class="box-body">
+                    <table id="example2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class="headings">
+                                <th>Laboratory Name</th>
+                                <th>Address</th>
+                                <th>License Number</th>
+                                <th>Contact</th>
+                                <th>Date Uploaded</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                        if(data.test_labs && data.test_labs.length > 0){
+                            data.test_labs.forEach((ilabs)=>{
+                        %>
+                            <tr>
+                                <td><a href="/admin/coa-testlabs/edit/<%=ilabs._id%>" target="_blank"><%=ilabs.labname%></a></td>
+                                <td><%=ilabs.address%></td>
+                                <td><%=ilabs.license_number%></td>
+                                <td><%=ilabs.contact%></td>
+                                <td><%=ilabs.created_at%></td>
+                                <td><%=ilabs.job_status%></td>
+                            </tr>
+                            <% })
+                        } %>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</section>
+<script>
+    $('#dateSet').datepicker({
+        format: 'mm-dd-yyyy',
+        autoclose: true
+        });
+</script>

@@ -1,0 +1,217 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <%- include ('./partials/admin_messages') %>
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">New Product</h3>
+                    <div class="pull-right">
+                        <a href="/admin/products" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form class="form-material" method="post" action="/admin/products/manage" id="productForm" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="<%=data.details._id%>">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category">Product Type:</label> 
+                                    <%
+                                    let choosedParentTypeId = data.details.parent_id;
+                                    %>
+                                    <select name="parent_id" id="parentPrdType" class="form-control form-control-line">
+                                        <option value="">Select Parent Type</option>
+                                        <%if(data.parent_types){
+                                            data.parent_types.forEach((type) => {
+                                                let typeSelected="";
+                                                if(type._id.equals(choosedParentTypeId)){
+                                                    typeSelected="selected";
+                                                }
+                                            %>
+                                            <option value="<%=type._id%>" <%=typeSelected%> ><%=type.name%></option>
+                                            <%
+                                            })
+                                        }%>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="product_type">Product Subtype:</label> 
+                                    <%
+                                    let choosedProductTypeId = data.details.product_type;
+                                    %>
+                                    <select name="product_type" id="product_type" class="form-control form-control-line">
+                                        <option value="">Select Product Type</option>
+                                            <%if(data.product_types){
+                                            data.product_types.forEach((type) => {
+                                                let typeSelected="";
+                                                if(type._id.equals(choosedProductTypeId)){
+                                                    typeSelected="selected";
+                                                }
+                                            %>
+                                            <option value="<%=type._id%>" <%=typeSelected%> ><%=type.name%></option>
+                                            <%
+                                            })
+                                        }%>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Sample Name<span class="required">*</span></label>
+                                    <input type="text" name="product_name" placeholder="Product Name" class="form-control form-control-line" value="<%=data.details.name%>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category">Strain:<span class="required">*</span></label> 
+                                    <%
+                                    let choosedStrain = data.details.strain;
+                                    %>
+                                    <select name="strain" id="strain" class="form-control form-control-line">
+                                        <option value="">Select Strain</option>
+                                        <%if(data.strainList){
+                                            data.strainList.forEach((strain) => {
+                                                let strainSelected="";
+                                                if(strain._id.equals(choosedStrain)){
+                                                    strainSelected="selected";
+                                                }
+                                            %>
+                                            <option value="<%=strain._id%>" <%=strainSelected%> ><%=strain.name%></option>
+                                            <%
+                                            })
+                                        }%>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea rows="4" cols="80" name="description" placeholder="Description...." class="form-control form-control-line" value="<%=data.details.description%>"><%=data.details.description%></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Product Image</label>
+                                    <input type="file" id="product_image" name="product_image" class="form-control-line" data-file_ext="jpg,jpeg,png" accept="image/*">
+                                    <p id="warning_image" style="display: none;"><b style="color:red;">Please select file less than 1MB</b></p>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <label style="width:100%">&nbsp;</label>
+                                <% if(data.details.product_image){  %>
+                                <img src="<%=data.details.product_image%>" alt="<%= data.details.name%>" style="height: 50px; width: 50px;">
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Product Weight (gram)</label>
+                                    <input type="text" name="weight" placeholder="Weight" class="form-control form-control-line" value="<%=data.details.weight%>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                   <label style="width:100%">&nbsp;</label>
+                                   <% let checked = data.details.is_active ? "checked" : "" %>
+                                   <input type="checkbox" id="status" name="is_active" value="1" <%=checked%>>
+                                   <label for="status"> Active</label>
+                                </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- contentFor('page_js') %>
+<script src="/script/additional-methods.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#dateSet').datepicker({
+			format: 'mm-dd-yyyy',
+			autoclose: true,
+			endDate: new Date()
+        });
+        $("#productForm").validate({
+            rules:{
+                name:{
+                    required:true
+                },
+                strain:{
+                    required:true
+                },
+                // product_type:{
+                //     required:true
+                // },
+                // weight:{
+                //     digits:true
+                // }
+            },
+            messages:{
+				
+			},
+            errorElement:'div'
+        })
+        
+        
+    
+    });
+
+    let getProductSubType = () => {
+        console.log('hahah')
+        let subTypeHTML = '<option value="">Select Product Type</option>'
+        let selectedSubType = '<%= data.details.product_type.toString() %>'
+        let isSelected = ''
+        $.ajax({
+            type: 'post',
+            url: '/admin/product-types/subtypes',
+            data: {
+                parent_product_type:$('#parentPrdType').val()
+            },
+            success: function(response) {
+                console.log('response',response)
+                if (response.status == 1) { 
+                    response.data.product_types.forEach((subTypes) => {
+                        isSelected = subTypes._id == selectedSubType ? 'selected' : ''
+                        subTypeHTML += '<option value="'+subTypes.id+'" '+isSelected+'>'+subTypes.name+'</option>'							
+                    })
+                    $('#product_type').html(subTypeHTML)          
+                } else {
+                    alert("Some Error Occured!");
+                }
+
+            },
+            error: function() {
+                alert('Some Error Occured!');
+            }
+        });
+    }
+    $('#parentPrdType').change(function(){
+        //alert($('#parentPrdType').val())
+        getProductSubType()
+    });
+    
+</script>

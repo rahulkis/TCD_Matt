@@ -1,0 +1,109 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Video Comment Reports</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+            </div>
+            <div class="box">
+                <!-- /.box-header
+                <div class="box-header with-border">
+					<h3 class="box-title">Filter</h3>
+                    <form class="form-material" method="post">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label>Community Question Category Name</label>
+                                    <input type="text" name="name" placeholder="Community Question Category Name" class="form-control form-control-line" value="<%=data.filterDatas.name%>">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <% let checked = (data.filterDatas.is_active==1) ? "checked" : "" %>
+                                    <input type="checkbox" id="status" name="is_active" value="1" <%=checked%>>
+                                    <label for="status">Active</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary" name="filter" value="1">Filter</button>
+                                    <button type="submit" class="btn btn-default" name="filter" value="2">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div> -->
+                <div class="box-body">
+                    <%- include ('./partials/admin_messages') %>
+                    <table id="example2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class="headings">
+                                <th>Comment</th>
+                                <th>Commented By</th>
+                                <th>Reported by</th>
+                                <th>Reported on</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                        if(data.list && data.list.length > 0){
+                            data.list.forEach((record)=>{
+                        %>
+                            <tr id="id_<%= record._id %>"> 
+                                <td><%=record.comment%></td>
+                                <td>
+                                    <% if(record.commented_by_image.length > 0){%>
+                                        <span class="avatar-contact avatar-online"><img src="<%=record.reported_by_image%>" alt="<%=record.reported_by_user%>" height="50px" weight="50px"></span>
+                                    <%}else{%>
+                                        <span class="avatar-contact avatar-online"><img src="/images/avatar.png" alt="avatar" height="50px" weight="50px"></span>
+                                    <%} %>
+                                    <br>
+                                    <%=record.commented_by_user%>
+                                </td>
+                                <td> <% if(record.reported_by_image.length > 0){%>
+                                    <span class="avatar-contact avatar-online"><img src="<%=record.reported_by_image%>" alt="<%=record.reported_by_user%>" height="50px" weight="50px"></span>
+                                <%}else{%>
+                                    <span class="avatar-contact avatar-online"><img src="/images/avatar.png" alt="avatar" height="50px" weight="50px"></span>
+                                <%} %>
+                                <br>
+                                <%=record.reported_by_user%>
+                                </td>
+                                <td><%=record.reported_at%></td>
+                                <td></td>
+                                <td>
+                                    <a href="/admin/video/comments/reports/" class="btn btn-info btn-xs"><i class="fa fa-check"></i></a>
+                                </td>
+                            </tr>
+                        <% })
+                        } %>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</section>
+<%- contentFor('page_js') %>
+<script>
+    $(document).ready(function () {
+        $("#categoryForm").validate({
+            rules:{
+                name:{
+                    required:true
+                }
+            },
+            errorElement:'div'
+        })
+    });
+</script>

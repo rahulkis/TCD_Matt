@@ -1,0 +1,134 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <%- include ('./partials/admin_messages') %>
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">FAQ</h3>
+                    <div class="pull-right">
+                        <a href="/admin/faq" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form class="form-material" method="post" action="/admin/faq/manage" id="cmsForm">
+                        <input type="hidden" name="id" value="<%=data.details._id%>">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Category<span class="required">*</span></label>
+                                    <select class="form-control" name="category_id" id="category_id" onchange="getFaqSubCategory()">
+										<option value="">Please Select</option>
+										<% data.faqCategory.forEach((faqCat) => { %>
+												<option value="<%= faqCat._id%>" <%= faqCat._id.toString() == data.selectedCategoryId ? 'selected' : '' %>><%= faqCat.name%></option>
+										<% }										
+										)%>
+										
+										<% %>
+									</select>
+                                </div>
+                            </div>                            
+                        </div>
+						<div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Sub Category<span class="required">*</span></label>
+                                    <select class="form-control" name="sub_category_id" id="sub_category_id">
+										<option value="">Please Select</option>
+										
+									</select>
+                                </div>
+                            </div>                            
+                        </div>						
+                        <div class="row">
+                            <div class="col-md-12">
+								<label>Question<span class="required">*</span></label>
+                                <input type="text" name="question" placeholder="Question" class="form-control form-control-line" value="<%=data.details.question%>">
+                            </div>
+                        </div>
+						
+						<div class="row" style="margin-top:10px;">
+                            <div class="col-md-12">
+								<label>Answer</label>
+                                <textarea rows="7" cols="80" name="answer" placeholder="Write your content here...." class="form-control form-control-line"><%=data.details.answer%></textarea>
+                            </div>
+                        </div>
+						<div class="row">
+						<div class="col-md-3">
+							<div class="form-group">
+								<label style="width:100%">&nbsp;</label>
+								   <input type="checkbox" id="status" name="is_active" value="<%=data.details.is_active%>" <%=data.details.is_active == 1 ? 'checked':''%>>
+								   <label for="status"> Active</label>
+							</div>
+						</div>
+						</div>                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- contentFor('page_js') %>
+
+<script>
+    $(document).ready(function () {
+        $("#cmsForm").validate({
+            rules:{
+				category_id:{
+					required:true
+				},
+                sub_category_id:{
+                    required:true
+                },
+                question:{
+                    required:true
+                },
+				answer:{
+                    required:true
+                }
+            },
+            errorElement:'div'
+        })
+    });
+	let getFaqSubCategory = () => {
+		console.log('hahah')
+		let subCatagoryHTML = '<option value="">Please Select</option>'
+		let selectedSubCategory = '<%= data.details.category_id.toString()%>'
+		let isSelected = ''
+		$.ajax({
+			type: 'post',
+			url: '/admin/faq/subcategory',
+			data: {
+				category_id:$('#category_id').val()
+			},
+			success: function(response) {
+			console.log('response',response)
+				if (response.success) { 
+					response.data.faqCategoryData.forEach((faqCat) => {
+						isSelected = faqCat._id == selectedSubCategory ? 'selected' : ''
+						subCatagoryHTML += '<option value="'+faqCat._id+'" '+isSelected+'>'+faqCat.name+'</option>'							
+					})
+					$('#sub_category_id').html(subCatagoryHTML)          
+				} else {
+					alert("Some Error Occured!");
+				}
+
+			},
+			error: function() {
+				alert('Some Error Occured!');
+			}
+		});
+	}
+	<% if (data.selectedCategoryId) {%>
+		getFaqSubCategory()
+	<% } %>
+</script>

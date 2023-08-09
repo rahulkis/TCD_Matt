@@ -1,0 +1,128 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Filter</h3>
+                    <div class="box-tools pull-right">
+                        <a href="/admin/coa-composition/add" class="btn btn-primary">Add COA Composition</a>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-header with-border">
+                    <form class="form-material" method="post">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" name="name" placeholder="name" class="form-control form-control-line" value="<%=data.filterDatas.name%>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Type</label>
+                                    <select class="form-control" name="type">
+                                        <option value="">Please Select</option>
+                                        <option value="1" <%=  data.filterDatas.type == 1 ? 'selected' : '' %>>Cannabinoid</option>
+                                        <option value="2" <%=  data.filterDatas.type == 2 ? 'selected' : '' %>>Terpenes</option>
+                                        <option value="3" <%=  data.filterDatas.type == 3 ? 'selected' : '' %>>Pesticides</option>
+                                        <option value="4" <%=  data.filterDatas.type == 4 ? 'selected' : '' %>>Microbials</option>
+                                        <option value="5" <%=  data.filterDatas.type == 5 ? 'selected' : '' %>>Mycotoxins</option>
+                                        <option value="6" <%=  data.filterDatas.type == 6 ? 'selected' : '' %>>Heavy Metals</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <% let checked = (data.filterDatas.is_active==1) ? "checked" : "" %>
+                                    <input type="checkbox" id="status" name="is_active" value="1" <%=checked%>>
+                                    <label for="status">Active</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary" name="filter" value="1">Filter</button>
+                                    <button type="submit" class="btn btn-default" name="filter" value="2">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="box-body">
+                    <%- include ('./partials/admin_messages') %>
+                    <table id="example2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class="headings">
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Image</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                        if(data.medicineComposition && data.medicineComposition.length > 0){
+                            data.medicineComposition.forEach((individualMedicineComposition)=>{
+                        %>
+                            <tr id="id_<%= individualMedicineComposition._id %>"> 
+                                <td><%=individualMedicineComposition.name%></td>
+                                <td><%=individualMedicineComposition.type_name%></td>
+                                <td><% if(individualMedicineComposition.is_active){ %>
+                                    <span class="chip green lighten-5">
+                                    <span class="green-text">Active</span>
+                                    </span>
+                                    <% }else{ %>
+                                    <span class="chip red lighten-5">
+                                    <span class="red-text">Inactive</span>
+                                    </span>
+                                    <% } %>
+                                </td>
+                                <td><img src="<%=individualMedicineComposition.image%>" width="40px" /></td>
+                                <td>
+                                    <div class="row text-center">
+                                        <div class="col-md-1">
+                                            <a href="/admin/coa-composition/update/<%= individualMedicineComposition._id%>" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-edit"></i></a>
+                                        </div>
+                                       <div class="col-md-1">
+                                            <form class="form-material" method="post" action="/admin/coa-composition/delete?id=<%=individualMedicineComposition._id%>">
+                                                <div class="form-group">
+                                                   <button type="submit"class="btn btn-danger btn-xs" style="color:#fff" onclick="return confirm('Are you sure,you want to delete this record ?')"><i class="fa fa-trash"></i></button>
+                                                </div>
+                                            </form>
+                                       </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% })
+                        } %>
+                        </tbody>
+                    </table>
+                    <%- include('partials/pagination')%>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</section>
+<%- contentFor('page_js') %>
+<script>
+    $(document).ready(function () {
+        $("#medicineCompositionForm").validate({
+            rules:{
+                name:{
+                    required:true
+                },
+                type:{
+                    required:true
+                }
+            },
+            errorElement:'div'
+        })
+    });
+</script>

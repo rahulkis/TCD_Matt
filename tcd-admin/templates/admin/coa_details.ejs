@@ -1,0 +1,403 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <%- include ('./partials/admin_messages') %>
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Update COA </h3>
+                    <div class="pull-right">
+                        <a href="/admin/coa" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category">Product:<span class="required">*</span></label> 
+                                    <%
+                                    let choosedProduct = data.details.product_id;
+                                    %>
+                                    <select name="product" id="product" class="form-control form-control-line">
+                                        <option value="">Select Product</option>
+                                        <%if(data.products){
+                                            data.products.forEach((product) => {
+                                                let productSelected="";
+                                                if(product._id.equals(choosedProduct)){
+                                                    productSelected="selected";
+                                                }
+                                            %>
+                                            <option value="<%=product._id%>" <%=productSelected%> ><%=product.name%></option>
+                                            <%
+                                            })
+                                        }%>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category">Data Source (URL/PDF):<span class="required">*</span></label> 
+                                    <input type="text" name="coa_source" placeholder="COA SOURCE" class="form-control form-control-line" value="<%=data.details.coa_source%>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="category">Data Source 2(URL/PDF):<span class="required">*</span></label> 
+                                    <input type="text" name="coa_source2" placeholder="COA SOURCE" class="form-control form-control-line" value="<%=data.details.coa_source2%>">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Associated COA Information</h4>
+                            </div>
+                            <div class="col-md-12">&nbsp;</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>COA Number<span class="required">*</span></label>
+                                    <input type="text" name="coa_no" placeholder="COA Number" class="form-control form-control-line" value="<%=data.details.coa_no%>">
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category">Strain:<span class="required">*</span></label> 
+                                    <%
+                                    let choosedStrain = data.details.strain;
+                                    %>
+                                    <select name="strain" id="strain" class="form-control form-control-line">
+                                        <option value="">Select Strain</option>
+                                        <%if(data.strainList){
+                                            data.strainList.forEach((individualStrain) => {
+                                                let strainSelected="";
+                                                if(individualStrain._id.equals(choosedStrain)){
+                                                    strainSelected="selected";
+                                                }
+                                            %>
+                                            <option value="<%=individualStrain._id%>" <%=strainSelected%> ><%=individualStrain.name%></option>
+                                            <%
+                                            })
+                                        }%>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Weight<span class="required">*</span></label>
+                                    <input type="text" name="weight" placeholder="weight" class="form-control form-control-line" value="<%=data.details.weight%>">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Sample Id<span class="required">*</span></label>
+                                    <input type="text" name="sample_id" placeholder="Sample Id" class="form-control form-control-line" value="<%=data.details.sample_id%>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Batch Id<span class="required">*</span></label>
+                                    <input type="text" name="batch_id" placeholder="Batch Id" class="form-control form-control-line" value="<%=data.details.batch_id%>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Producer Name<span class="required">*</span></label>
+                                    <input type="text" name="producer_name" placeholder="Producer Name" class="form-control form-control-line" value="<%=data.details.producer_name%>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Producer License<span class="required">*</span></label>
+                                    <input type="text" name="producer_lic" placeholder="Producer License" class="form-control form-control-line" value="<%=data.details.producer_lic%>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Distributor Name<span class="required">*</span></label>
+                                    <input type="text" name="distributor_name" placeholder="Distributor Name" class="form-control form-control-line" value="<%=data.details.distributor_name%>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Distributor License<span class="required">*</span></label>
+                                    <input type="text" name="distributor_lic" placeholder="Distributor License" class="form-control form-control-line" value="<%=data.details.distributor_lic%>">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Total Cannabinoid</label>
+                                    <input type="number" name="total_cannabinoid" placeholder="Total Cannabinoid" class="form-control form-control-line percent_field" value="<%=data.details.total_cannabinoid%>" min=0 step="0.01">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                               <div class="form-group">
+                                    <label>Total Terpenes</label>
+                                    <input type="number" name="total_terpenes" placeholder="Total Terpenes" class="form-control form-control-line percent_field" value="<%=data.details.total_terpenes%>" min=0 step="0.01">
+                               </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Total THC</label>
+                                    <input type="number" name="total_THC" placeholder="Total THC" class="form-control form-control-line percent_field" value="<%=data.details.total_THC%>" min=0 step="0.01">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                               <div class="form-group">
+                                    <label>Total CBD</label>
+                                    <input type="number" name="total_CBD" placeholder="Total CBD" class="form-control form-control-line percent_field" value="<%=data.details.total_CBD%>" min=0 step="0.01">
+                               </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Laboratory Name<span class="required">*</span></label>
+                                    <input type="text" name="laboratory_name" placeholder="Laboratory Name" class="form-control form-control-line" value="<%=data.details.laboratory_name%>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Tested On</label>
+                                    <% 
+                                    if(data.details.tested_at){
+                                        var month = data.details.tested_at.getUTCMonth() + 1;
+                                        if(month<10) {
+                                            month = "0"+month;
+                                        }
+                                        var day = data.details.tested_at.getUTCDate();
+                                        if(day < 10) {
+                                            day= "0"+day;
+                                        }
+                                        var year =data.details.tested_at.getUTCFullYear();
+                                        var testDate = month+ "-" + day + "-" +year;
+                                    }
+                                    %>
+                                    <input type="text" placeholder="mm-dd-yyyy" id="dateSet" name="tested_at" class="form-control form-control-line" value="<%=testDate%>">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Positive Test Report Text</label>
+                                    <input type="text" name="positive_test_report_text" placeholder="positive test report text" class="form-control form-control-line" value="<%=data.details.positive_test_report_text%>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                               <div class="form-group">
+                                <label>Negative Test Report Text</label>
+                                <input type="text" name="negative_test_report_text" placeholder="negative test report text" class="form-control form-control-line" value="<%=data.details.negative_test_report_text%>">
+                               </div>
+                            </div>
+                        </div>
+                        <% if(data.details.cannabinoid_profile.length>0){ %>
+                            <div class="row"> 
+                                <div class="col-md-12">
+                                    <h4>Cannabinoids</h4>
+                                </div> 
+                            </div>
+                            <%    for(let k=0;k<(data.details.cannabinoid_profile).length;k++){ %>
+                                    <div class="row input-form">
+                                        <div class="col-md-3">
+                                            <label>&nbsp;</label>
+                                            <input type="text" readonly name="cannabinoid_weight" placeholder="0" class="form-control form-control-line percent_field" value="<%=data.details.cannabinoid_profile[k].composition_name%>">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>LOD</label>
+                                                <input readonly type="number"  placeholder="0" class="form-control form-control-line percent_field" value="<%=data.details.cannabinoid_profile[k].LOD%>" min=0 step="0.01">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>LOQ</label>
+                                                <input readonly type="number"  placeholder="0" class="form-control form-control-line percent_field" value="<%=data.details.cannabinoid_profile[k].LOQ%>" min=0 step="0.01">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Weight (%)</label>
+                                                <input readonly type="number" name="cannabinoid_weight" placeholder="0" class="form-control form-control-line percent_field" value="<%=data.details.cannabinoid_profile[k].weight%>" min=0 step="0.01">
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                        <%} 
+                        
+                         } %>
+                            
+                        
+                        
+                            <% if(data.details.terpenes.length>0){ %>
+                                <div class="row"> 
+                                    <div class="col-md-12">
+                                        <h4>Terpenes</h4>
+                                    </div> 
+                                </div>
+                                <% for(let k=0;k<(data.details.terpenes).length;k++){ %>
+                                    <div class="row input-form-terpenes">
+                                    <div class="col-md-6">
+                                        <label>&nbsp;</label>
+                                        <select name="terpenes"  class="form-control form-control-line" id="validate_check_terpenes">
+                                                <option value="">--Select Terpenes--</option>
+                                                <% for (let i = 0;i < data.terpenesList.length;i++){
+                                                    var terpenesSelected="";
+                                                    if((data.details.terpenes[k].composition_id).equals((data.terpenesList[i]._id))){
+                                                        terpenesSelected="selected"
+                                                    }
+                                                %>
+                                                <option value="<%= data.terpenesList[i]._id%>" <%=terpenesSelected%>><%=data.terpenesList[i].name%></option>
+                                                <% } %>
+                                        </select>
+                                        <p class="warning_msg_terpenes"><b style="color: red;display: none;">Please select atleast one.</b></p>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label> Weight(%)</label>
+                                            <input type="number" name="terpenes_weight" placeholder="0" class="form-control form-control-line percent_field" value="<%=data.details.terpenes[k].weight%>" min=0 step="0.01">
+                                        </div>
+                                    </div>
+                                </div>
+                                <%}
+                            } %>
+                            <% if(data.details.pesticides.length>0){ %>
+                                <div class="row"> 
+                                    <div class="col-md-12">
+                                        <h4>Pesticides</h4>
+                                    </div> 
+                                </div>
+                                <% for(let k=0;k<(data.details.pesticides).length;k++){ %>
+                                    <div class="row input-form-pesticides">
+                                    <div class="col-md-4">
+                                        <label>&nbsp;</label>
+                                        <select name="terpenes"  class="form-control form-control-line" id="validate_check_terpenes">
+                                                <option value="">--Select Pesticides--</option>
+                                                <% for (let i = 0;i < data.pesticidesList.length;i++){
+                                                    var pesticideSelected="";
+                                                    if((data.details.pesticides[k].composition_id).equals((data.pesticidesList[i]._id))){
+                                                        pesticideSelected="selected"
+                                                    }
+                                                %>
+                                                <option value="<%= data.pesticidesList[i]._id%>" <%=pesticideSelected%>><%=data.pesticidesList[i].name%></option>
+                                                <% } %>
+                                        </select>
+                                        <p class="warning_msg_terpenes"><b style="color: red;display: none;">Please select atleast one.</b></p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label> Weight(%)</label>
+                                            <input type="number" name="pesticides_weight" placeholder="0" class="form-control form-control-line percent_field" value="<%=data.details.pesticides[k].weight%>" min=0 step="0.01">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label> Limit</label>
+                                            <input type="number" name="pesticides_limit" placeholder="0" class="form-control form-control-line percent_field" value="<%=data.details.pesticides[k].limit%>" min=0 step="0.01">
+                                        </div>
+                                    </div>
+                                </div>
+                                <%}
+                            } %>
+
+                            <% if(data.details.microbials.length>0){ %>
+                                <div class="row"> 
+                                    <div class="col-md-12">
+                                        <h4>Microbials</h4>
+                                    </div> 
+                                </div>
+                                <% for(let k=0;k<(data.details.microbials).length;k++){ %>
+                                    <div class="row input-form-microbials">
+                                        <div class="col-md-6">
+                                            <label>&nbsp;</label>
+                                            <select readonly="true" name="microbials"  class="form-control form-control-line" class="validate_check_microbials">
+                                                    <option value="">--Select Pesticides--</option>
+                                                    <% for (let i = 0;i < data.microbialsList.length;i++){
+                                                        var microbialsSelected="";
+                                                        if((data.details.microbials[k].composition_id).equals((data.microbialsList[i]._id))){
+                                                            microbialsSelected="selected"
+                                                        }
+                                                    %>
+                                                    <option value="<%= data.microbialsList[i]._id%>" <%=microbialsSelected%>><%=data.microbialsList[i].name%></option>
+                                                    <% } %>
+                                            </select>
+                                            <p class="warning_msg_microbials"><b style="color: red;display: none;">Please select atleast one.</b></p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label> Weight(%)</label>
+                                                <input type="number" name="microbials_weight" placeholder="0" class="form-control form-control-line percent_field" value="<%=data.details.microbials[k].weight%>" min=0 step="0.01">
+                                            </div>
+                                        </div>
+                                    </div>
+                                <%}
+                            } %>
+
+                            <% if(data.details.mycotoxins.length>0){ %>
+                                <div class="row"> 
+                                    <div class="col-md-12">
+                                        <h4>Mycotoxins</h4>
+                                    </div> 
+                                </div>
+                                <% for(let k=0;k<(data.details.mycotoxins).length;k++){ %>
+                                    <div class="row input-form-mycotoxins">
+                                    <div class="col-md-3">
+                                        <label>&nbsp;</label>
+                                        <input type="text" readonly value="<%=data.details.mycotoxins[k].composition_name%>" class="form-control form-control-line"/>
+                                        
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>LOD</label>
+                                        <input type="text" readonly value="<%=data.details.mycotoxins[k].LOD%>" class="form-control form-control-line"/>
+                                        
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>LOQ</label>
+                                        <input type="text" readonly value="<%=data.details.mycotoxins[k].LOQ%>" class="form-control form-control-line"/>
+                                        
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label> Limit</label>
+                                            <input type="number" readonly name="mycotoxins_weight" placeholder="0" class="form-control form-control-line percent_field" value="<%=data.details.mycotoxins[k].limit%>" min=0 step="0.01">
+                                        </div>
+                                    </div>
+                                </div>
+                                <%}
+                            } %>
+                        
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label style="width:100%">&nbsp;</label>
+                                    <% let checked = data.details.is_active ? "checked" : "" %>
+                                    <input type="checkbox" id="status" name="is_active" value="1" <%=checked%>>
+                                    <label for="status"> Active</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%- contentFor('page_js') %>
+<script>
+    $('.validate_check_microbials option:not(:selected)').attr('disabled', true);
+</script>
+

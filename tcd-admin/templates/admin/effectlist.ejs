@@ -1,0 +1,177 @@
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">New Effect</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    
+                </div>
+            </div>
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-header with-border">
+					<h3 class="box-title">Filter</h3>
+                    <form class="form-material" method="post">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Effect Name</label>
+                                    <input type="text" name="name" placeholder="Effect Name" class="form-control form-control-line" value="<%=data.filterDatas.name%>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <% let checked = (data.filterDatas.is_active==1) ? "checked" : "" %>
+                                    <input type="checkbox" id="status" name="is_active" value="1" <%=checked%>>
+                                    <label for="status">Active</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label style="width:100%">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary" name="filter" value="1">Filter</button>
+                                    <button type="submit" class="btn btn-default" name="filter" value="2">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="box-body">
+                    <%- include ('./partials/admin_messages') %>
+                    <table id="example2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class="headings">
+                                <th>Effect Name</th>
+                                <th>Parent Name</th>
+                                <th>Image</th>
+                                <th>Icon</th>
+                                <th>Sort Order</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                        if(data.records && data.records.length > 0){
+                            data.records.forEach((record)=>{
+                        %>
+                            <tr id="id_<%= record._id %>"> 
+                                <td><%=record.effect_name%></td>
+                                <td><%=record.parent_name%></td>
+                                <td>
+                                    <% if(record.image){%>
+                                        <img src="<%=record.image%>" alt="<%= record.name%>" style="height: 50px; width: 50px;">
+                                    <%}else{%>
+                                        <img src="/images/default-50x50.gif" alt="<%= record.name%>" style="height: 50px; width: 50px;">
+                                    <%} %>
+                                </td>
+                                <td>
+                                    <% if(record.icon){%>
+                                        <img src="<%=record.icon%>" alt="<%= record.name%>" style="height: 50px; width: 50px;">
+                                    <%}else{%>
+                                        <img src="/images/default-50x50.gif" alt="<%= record.name%>" style="height: 50px; width: 50px;">
+                                    <%} %>
+                                </td>
+                                <td><%=record.sort_order%></td>
+                                <td><% if(record.is_active){ %>
+                                    <span class="chip green lighten-5">
+                                    <span class="green-text"><%=record.status%></span>
+                                    </span>
+                                    <% }else{ %>
+                                    <span class="chip red lighten-5">
+                                    <span class="red-text"><%=record.status%></span>
+                                    </span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <a href="/admin/effect/update/<%= record._id%>" class="btn btn-warning btn-xs" style="color:#fff"><i class="fa fa-edit"></i></a> 
+                                    <a href="/admin/effect/delete/<%= record._id%>" class="btn btn-danger btn-xs removerecord" style="color:#fff"><i class="fa fa-trash-o"></i></a>
+                                    
+                                </td>
+                            </tr>
+                        <% })
+                        } %>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</section>
+<%- contentFor('page_js') %>
+<script>
+    $('tbody').sortable({
+        items:"tr:not('.headings')",
+        placeholder:'bg-warning',
+        update:function(){
+           const ids = $('tbody').sortable('serialize');
+           console.log(ids);
+           $.post('/admin/effect/manage-ordering',ids,function(res){
+               console.log(res);
+           })
+        }
+    });
+</script>
+<script src="/script/additional-methods.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#effect_image').change(function () {
+            if (this.files.length > 0) {
+                $.each(this.files, function (index, value) {
+               var sizeLimit= 1024*1024; //size limit 1 mb
+               if(value.size>sizeLimit){
+                  $('#warning_image').show();
+               } 
+               else{
+                    $('#warning_image').hide();
+               }   
+                })
+            }
+        });
+        $('#effect_icon').change(function () {
+            if (this.files.length > 0) {
+                $.each(this.files, function (index, value) {
+                var sizeLimit= 1024*1024; //size limit 1 mb
+                if(value.size>sizeLimit){
+                $('#warning_icon').show();
+               }
+               else{
+                   $('#warning_icon').hide();
+               }   
+                })
+            }
+        });
+        $("#effectForm").validate({
+            rules:{
+                name:{
+                    required:true
+                },
+                effect_image:{
+                    extension: "jpg,jpeg,png"
+                },
+                effect_icon:{
+                    extension: "jpg,jpeg,png"
+                }
+            },
+            messages:{
+				effect_image: {
+					extension: "Only image type extensions (jpg,jpeg,png) are allowed"
+				},
+                effect_icon: {
+					extension: "Only image type extensions (jpg,jpeg,png) are allowed"
+				}
+			},
+            errorElement:'div'
+        });
+    });
+</script>

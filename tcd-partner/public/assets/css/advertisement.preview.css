@@ -1,0 +1,52 @@
+/***** Custom cSs *****/
+.data-info {
+  background-color: #869c90;
+  aspect-ratio: 1;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+.ptb-1{padding: 1em 0;}
+
+.content-description-info {
+  border: 7px solid #fff;
+  padding: 1em;
+  color: #fff;
+  background-color: #719ca5;
+  border-radius: 10px;
+  text-align: left;
+}
+.content-description-info .content-title-info {
+  font-size: 20px;
+}
+.cus-col-5 {
+  flex: 0 0 auto;
+  width: 20%;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+.cus-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.main-data-section-wrapper .container {
+  width: 60%;
+  margin: 0 auto;
+  background-color: #abc1b4;
+}
+.cus-col-5, .upper-data-section-info .col-4{padding-left: 5px;padding-right: 5px;}
+.description-info, .user-name-info {
+  font-size: 15px;
+  margin-bottom: 0;
+  color: #fff !important;
+}
+.middle-data-section-info {
+  margin-right: -15px;
+  margin-left: -15px;
+  padding: 0;
+}
+/***** Media Queries *****/
+
+@media screen and (max-width:576px){
+  
+}
